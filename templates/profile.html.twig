@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        body { background: none; margin: 0; font-family: Arial, Helvetica, sans-serif;}
+        header { background: #3A66CA; padding: 16px 32px; text-align: right;}
+        header .support-btn { font-weight: bold; display: block; color: #000; text-decoration: none;}
+        header .support-btn:hover { color: #df4a4a; text-decoration: underline;}
+        footer { background: #3A66CA; padding: 22px 32px; text-align: center; position: fixed; bottom: 0; width: 100%;}
+        footer p { margin: 0; font-weight: bold;}
+    </style>
+    <header>
+
+        {% if app.user %}
+            <div class="mb-3">
+                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+            </div>
+        {% endif %}
+        <a href="#" class="support-btn">Support</a>
+    </header>
+    <div class="profile-container" style="background: linear-gradient(to right, #3b585f, #2193b0); color: white; text-align: center; border-radius: 10px; padding: 20px; max-width: 600px; margin: auto;">
+        <h1 style="font-size: 2.5em; margin-bottom: 0.5em;">User Profile</h1>
+        <div class="user-info" style="background: rgba(255, 255, 255, 0.2); padding: 15px; border-radius: 10px;">
+            <p style="font-size: 1.5em; margin: 10px 0;"><strong>Username:</strong> <span style="font-weight: normal;">{{ app.user.username }}</span></p>
+            <p style="margin: 10px 0;"><strong>Email:</strong> <span style="font-weight: normal;">{{ app.user.email }}</span></p>
+            <p style="margin: 10px 0;"><strong>First Name:</strong> <span style="font-weight: normal;">{{ app.user.firstName }}</span></p>
+            <p style="margin: 10px 0;"><strong>Last Name:</strong> <span style="font-weight: normal;">{{ app.user.lastName }}</span></p>
+            <p style="margin: 10px 0;"><strong>Contract type:</strong> <span style="font-weight: normal;">{{ app.user.contractType }}</span></p>
+            <p style="margin: 10px 0;"><strong>Subscription Status:</strong> <span style="font-weight: normal;">{{ app.user.subscriptionStatus }}</span></p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; Copyrights 2024</p>
+    </footer>
+{% endblock %}
