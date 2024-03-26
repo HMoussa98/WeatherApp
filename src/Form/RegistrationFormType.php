@@ -44,11 +44,11 @@ class RegistrationFormType extends AbstractType
                 'multiple' => true,
                 'choices' => [
                     'Admin' => 'ROLE_ADMIN',
-                    'Data Acquisition' => 'ROLE_Data_Acquisition',
-                    'ICT Services' => 'ROLE_ICT_Services',
-                    'Development & Maintanance' => 'ROLE_Development_Maintanance',
-                    'Service Management' => 'ROLE_Service_Management',
-                    'Stafbureau' => 'ROLE_Stafbureau',
+                    'Data Acquisition' => 'ROLE_DATA_ACQUISITION',
+                    'ICT Services' => 'ROLE_ICT_SERVICES',
+                    'Development & Maintanance' => 'ROLE_DEVELOPMENT_MAINTENANCE',
+                    'Service Management' => 'ROLE_SERVICE_MANAGEMENT',
+                    'Stafbureau' => 'ROLE_STAFBUREAU',
                 ]
             ])
         ;

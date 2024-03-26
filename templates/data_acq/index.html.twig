@@ -9,6 +9,8 @@
 </style>
 
 <div class="example-wrapper">
+    <h1>Hello {{ controller_name }}! ✅</h1>
+
    {% if app.user %}
         <h1>You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a></h1>
     {% endif %}

@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class ServiceManageController extends AbstractController
 {
-    #[Route('/service/manage', name: 'app_service_manage')]
+    #[Route('/service_manage', name: 'app_service_manage')]
     public function index(): Response
     {
         return $this->render('service_manage/index.html.twig', [

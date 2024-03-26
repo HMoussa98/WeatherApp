@@ -39,15 +39,33 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         );
     }
 
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ? Response
     {
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
 
-        // For example:
-        // return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        return new RedirectResponse($this->urlGenerator->generate('data_acq'));
+        #ROLE_ADMIN
+        if ($token->getUser()->hasRole('ROLE_ADMIN')) {
+            return new RedirectResponse($this->urlGenerator->generate('app_admin'));
+        
+        #ROLE_DATA_ACQUISITION
+        } elseif ($token->getUser()->hasRole('ROLE_DATA_ACQUISITION')) {
+            return new RedirectResponse($this->urlGenerator->generate('app_data_acq'));
+
+        #ROLE_DEVELOPMENT_MAINTENANCE
+        } elseif ($token->getUser()->hasRole('ROLE_DEVELOPMENT_MAINTENANCE')) {
+            return new RedirectResponse($this->urlGenerator->generate('app_dev_maintan'));
+
+        #ROLE_SERVICE_MANAGEMENT
+        } elseif ($token->getUser()->hasRole('ROLE_SERVICE_MANAGEMENT')) {
+            return new RedirectResponse($this->urlGenerator->generate('app_service_manage'));
+        
+        #No role
+        } else {
+            return new RedirectResponse($this->urlGenerator->generate('app_logout'));
+        }
+
     }
 
     protected function getLoginUrl(Request $request): string

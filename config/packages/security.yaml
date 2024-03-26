@@ -26,6 +26,9 @@ security:
 
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
+    
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_DATA_ACQUISITION, ROLE_DEVELOPMENT_MAINTENANCE, ROLE_SERVICE_MANAGEMENT]
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
@@ -34,8 +37,14 @@ security:
         - { path: ^/register, roles: ROLE_ADMIN }
         - { path: ^/admin, roles: ROLE_ADMIN }
 
-    # Data Acquisition
-        - { path: ^/data_acq, roles: [ROLE_ADMIN, ROLE_Data_Acquisition] }
+    # DATA_ACQUISITION
+        - { path: ^/data_acq, roles: [ROLE_DATA_ACQUISITION] }
+
+    # DEVELOPMENT_MAINTENANCE
+        - { path: ^/dev_maintan, roles: [ROLE_DEVELOPMENT_MAINTENANCE] }
+
+    # SERVICE_MANAGEMENT
+        - { path: ^/service_manage, roles: [ROLE_SERVICE_MANAGEMENT] }
 
 
 when@test:

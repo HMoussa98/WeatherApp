@@ -38,6 +38,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     private ?string $last_name = null;
+    
 
     public function getId(): ?int
     {
@@ -136,5 +137,10 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
         $this->last_name = $last_name;
 
         return $this;
+    }
+
+    public function hasRole($role): bool
+    {
+        return in_array($role, $this->getRoles());
     }
 }

@@ -8,7 +8,7 @@ index:
     path: /
     controller: App\Controller\SecurityController::login
 
-admin:
+app_admin:
     path: /admin
     controller: App\Controller\AdminController::index
 
@@ -24,6 +24,14 @@ register:
     path: /register
     controller: App\Controller\RegistrationController::register
 
-data_acq:
+app_data_acq:
     path: /data_acq
     controller: App\Controller\DataAcqController::index
+
+app_dev_maintan:
+    path: /dev_maintan
+    controller: App\Controller\DevMaintanController::index
+
+app_service_manage:
+    path: /service_manage
+    controller: App\Controller\ServiceManageController::index
