@@ -3,19 +3,39 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
 
-    {{ form_errors(registrationForm) }}
+<main>
+    <div class="container">
+        <h1>Registreer pagina</h1>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.first_name) }}
-        {{ form_row(registrationForm.last_name) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.roles) }}
+        <div class="register-form">
+            {{ form_errors(registrationForm) }}
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+            {{ form_start(registrationForm) }}
+            <div>
+                <span class="icon"><span class="material-icons">person</span></span>
+                {{ form_row(registrationForm.first_name) }}
+            </div>
+            <div>
+                <span class="icon"><span class="material-icons">person</span></span>
+                {{ form_row(registrationForm.last_name) }}
+            </div>
+            <div>
+                <span class="icon"><span class="material-icons">mail</span></span>
+                {{ form_row(registrationForm.email) }}
+            </div>
+            <div>
+                <span class="icon"><span class="material-icons">lock</span></span>
+                {{ form_row(registrationForm.plainPassword) }}
+            </div>
+        </div>
+        <div>
+            <span class="icon"><span class="material-icons">lock</span></span>
+            {{ form_row(registrationForm.roles) }}
+        </div>
+        <div><button type="submit" class="">Registreren</button></div>
+        {{ form_end(registrationForm) }}
+    </div>
+</main>
+
 {% endblock %}

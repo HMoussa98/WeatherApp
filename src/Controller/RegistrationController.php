@@ -35,11 +35,12 @@ class RegistrationController extends AbstractController
                 $roles[] = $role;
             }
 
-
             $user->setRoles(array_unique($roles));
 
             $entityManager->persist($user);
             $entityManager->flush();
+
+            // return $this->redirect($request->getUri());
 
             // do anything else you need here, like send an email
 
