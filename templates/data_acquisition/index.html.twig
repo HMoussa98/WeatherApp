@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+{% block title %}Weer Data Acquisition{% endblock %}
+
+{% block body %}
+    <style>
+        .form-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+        .form-wrapper label { display: block; margin-bottom: 0.5em; }
+        .form-wrapper input[type="text"], .form-wrapper input[type="number"], .form-wrapper select { width: 100%; padding: 0.5em; margin-bottom: 1em; }
+        .form-wrapper button { padding: 0.5em 1em; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+        .form-wrapper button:hover { background-color: #45a049; }
+        .image-wrapper { display: flex; justify-content: space-between; margin-top: 2em; }
+        .image-wrapper img { max-width: 48%; }
+        .visualization-header { text-align: center; margin-top: 2em; }
+    </style>
+
+    <div class="form-wrapper">
+        <h1>Weather Data Acquisition</h1>
+        <form method="post">
+            <label for="station">Station Id:</label>
+            <input type="text" id="station" name="station" required>
+
+            <label for="temperature">Temperatuur (°C):</label>
+            <input type="number" id="temperature" name="temperature" step="0.01" required>
+
+            <label for="dew_point">Dew Point (°C):</label>
+            <input type="number" id="dew_point" name="dew_point" step="0.01" required>
+
+            <label for="atmospheric_pressure">Luchtdruk (hPa):</label>
+            <input type="number" id="atmospheric_pressure" name="atmospheric_pressure" step="0.01" required>
+
+            <label for="visibility">Zichtbaarheid (km):</label>
+            <input type="number" id="visibility" name="visibility" step="0.01" required>
+
+            <label for="wind_speed">Windsnelheid (m/s):</label>
+            <input type="number" id="wind_speed" name="wind_speed" step="0.01" required>
+
+            <label for="wind_direction">Windrichting (°):</label>
+            <input type="number" id="wind_direction" name="wind_direction" required>
+
+            <label for="precipitation">Neerslag (mm/hr):</label>
+            <input type="number" id="precipitation" name="precipitation" step="0.01" required>
+
+            <label for="snow_depth">Sneeuwdiepte (cm):</label>
+            <input type="number" id="snow_depth" name="snow_depth" step="0.01" required>
+
+            <label for="cloud_cover">Bewolking (%):</label>
+            <input type="number" id="cloud_cover" name="cloud_cover" step="0.01" required>
+
+            <label for="weather_phenomena">Weer Status:</label>
+            <select id="weather_phenomena" name="weather_phenomena" required>
+                <option value="sunny">Zonnig</option>
+                <option value="cloudy">Bewolkt</option>
+                <option value="rainy">Regenachtig</option>
+                <option value="snowy">Sneeuw</option>
+                <option value="stormy">Stormachtig</option>
+            </select>
+
+            <label for="date">Datum:</label>
+            <input type="date" id="date" name="date" required>
+
+            <label for="time">Tijd:</label>
+            <input type="time" id="time" name="time" required>
+
+            <button type="submit">Data Visualiseren</button>
+        </form>
+    </div>
+
+    <div class="visualization-header">
+        <h2>Visualisatie</h2>
+    </div>
+
+    <div class="image-wrapper">
+        <img src="https://miro.medium.com/v2/resize:fit:1108/1*iWFo62svhhuAZfnsxJ4vng.png" alt="Visualization Example 1">
+        <img src="https://s3.eu-central-1.amazonaws.com/meteomatics-assets-test/2_Products/MetX/metx-illustration-documentation.png" alt="Visualization Example 2">
+    </div>
+{% endblock %}
+
