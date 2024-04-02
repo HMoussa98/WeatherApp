@@ -14,6 +14,9 @@
     </head>
     <body>
         <header>
+            {% if is_granted('ROLE_DEVELOPMENT_MAINTENANCE') %}
+                <h1>Dashboard - Application Development & Maintenance</h1>
+            {% endif %}
             <a href="#" class="support-btn">Support</a>
         </header>
         {% block body %}{% endblock %}

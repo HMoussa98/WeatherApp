@@ -12,7 +12,7 @@ class DevMaintanController extends AbstractController
     public function index(): Response
     {
         return $this->render('dev_maintan/index.html.twig', [
-            'controller_name' => 'DevMaintanController',
+            'controller_name' => 'Dev_Maintan_Controller',
         ]);
     }
 }

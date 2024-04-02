@@ -1,0 +1,45 @@
+.example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+.example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+.search-form {
+    display: flex;
+    align-items: center;
+}
+.search-input {
+    flex: 1;
+    background-color: #D9D9D9;
+    border: 1px solid black;
+    color: black;
+    padding: 5px;
+    margin-right: 5px;
+    border-radius: 40px; /* Rounded corners */
+}
+.search-button,
+.location-button {
+    background-color: #EE1715;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-left: 5px;
+    cursor: pointer;
+    border-radius: 40px; /* Rounded corners */
+    font-size: 14px; /* Kleinere tekstgrootte */
+}
+.location-button {
+    flex-shrink: 0; /* Voorkom dat de knop krimpt */
+}
+.location-button i {
+    font-size: 20px; /* Pas de grootte van het pictogram aan */
+}
+.location-button:hover {
+    background-color: #D32F2F; /* Verander de achtergrondkleur op hover */
+}
+.location-button:focus {
+    outline: none; /* Verwijder de focus outline */
+}
+.location-info {
+    background-color: #D9D9D9; /* Achtergrondkleur */
+    border-radius: 10px; /* Afgeronde hoeken */
+    padding: 20px; /* Binnenste vulling */
+    display: inline-block; /* Breedte wordt bepaald door de inhoud */
+
+}
