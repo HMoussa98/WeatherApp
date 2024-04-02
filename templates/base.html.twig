@@ -4,17 +4,60 @@
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
 
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
     </head>
     <body>
-        <header>
-            <a href="#" class="support-btn">Support</a>
+        <header class="bg-blue p-0">
+            <div class="container-fluid">
+                <nav class="navbar navbar-expand-lg">
+                    <div class="container-fluid">
+                        <img src="https://i.postimg.cc/X7L8GXnL/LogoIWA.jpg" alt="logo" class="navbar-brand" width="60" height="24">
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                {% if is_granted('ROLE_ADMIN') %}
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" aria-current="page" href="/admin/dashboard">Dashboard</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" aria-current="page" href="/register">Een Gebruiker Registreren</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" aria-current="page" href="#">Gebruikers Beheren</a>
+                                </li>
+                                {% endif %}
+                            </ul>
+
+                            <ul class="d-flex">
+                                {% if app.user %}
+                                <li class="nav-item pt-2 px-3">
+                                    <span class="fw-bold text-white">Ingelogd als: </span>
+                                    <span class="text-white">{{ app.user.email }}</span>
+                                </li>
+                                {% endif %}
+                                <li class="nav-item">
+                                    {% if app.user %}
+                                    <a href="/logout" class="btn btn-outline-light">Uitloggen</a>
+                                    {% else %}
+                                    <a href="#" class="btn btn-light">Support</a>
+                                    {% endif %}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
         </header>
         {% block body %}{% endblock %}
         <footer>

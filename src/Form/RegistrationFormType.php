@@ -20,22 +20,22 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('first_name', null, [
                 'label' => false,
-                'attr' => ['placeholder' => 'First name', 'class' => 'email']
+                'attr' => ['placeholder' => 'First name', 'class' => 'form-control']
             ])
             ->add('last_name', null, [
                 'label' => false,
-                'attr' => ['placeholder' => 'Last name', 'class' => 'email']
+                'attr' => ['placeholder' => 'Last name', 'class' => 'form-control']
             ])
             ->add('email', null, [
                 'label' => false,
-                'attr' => ['placeholder' => 'Email', 'class' => 'email']
+                'attr' => ['placeholder' => 'Email', 'class' => 'form-control']
             ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'label' => false,
                 'mapped' => false,
-                'attr' => ['autocomplete' => 'new-password', 'class' => 'password', 'placeholder' => 'Wachtwoord'],
+                'attr' => ['autocomplete' => 'new-password', 'class' => 'form-control', 'placeholder' => 'Wachtwoord'],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a password',
@@ -50,6 +50,7 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('roles', ChoiceType::class, [ 
                 'mapped' => false,
+                'label' => 'Rollen',
                 'expanded' => true,
                 'multiple' => true,
                 'choices' => [
