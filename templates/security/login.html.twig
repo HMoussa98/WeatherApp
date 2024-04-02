@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+
+<main>
+    <div class="container">
+        <div class="left">
+            <h1>Login</h1>
+
+            <form method="post">
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+                <div>
+                    <span class="icon"><span class="material-icons">mail</span></span>
+                    <input type="email" name="email" id="inputEmail" class="email" autocomplete="email" placeholder="Email" required autofocus>
+                </div>
+                <div>
+                    <span class="icon"><span class="material-icons">lock</span></span>
+                    <input type="password" name="password" id="inputPassword" class="password" placeholder="Wachtwoord" autocomplete="current-password" required>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                </div>
+                <div class="pass-div">
+                    <a href="#">Wachtwoord vergeten?</a>
+                </div>
+                <div><button class="" type="submit">Login</button></div>
+            </form>
+            
+        </div>
+        <div class="right">
+            <img src="https://i.postimg.cc/X7L8GXnL/LogoIWA.jpg" alt="logo">
+        </div>
+    </div>
+</main>
+
+{% endblock %}

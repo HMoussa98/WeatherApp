@@ -5,13 +5,20 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
         {% endblock %}
 
         {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
+            {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
     <body>
+        <header>
+            <a href="#" class="support-btn">Support</a>
+        </header>
         {% block body %}{% endblock %}
+        <footer>
+            <p>&copy; Copyrights 2024</p>
+        </footer>
     </body>
 </html>

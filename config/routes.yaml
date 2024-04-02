@@ -6,16 +6,32 @@
 
 index:
     path: /
-    controller: App\Controller\MainController::index
+    controller: App\Controller\SecurityController::login
 
-Main:
-    path: /main
-    controller: App\Controller\MainController::index
+app_admin:
+    path: /admin
+    controller: App\Controller\AdminController::index
 
-Login:
+app_login:
     path: /login
-    controller: App\Controller\LoginController::login
+    controller: App\Controller\SecurityController::login
 
-Register:
+app_logout:
+    path: /logout
+    controller: App\Security\SecurityController::logout
+
+register:
     path: /register
     controller: App\Controller\RegistrationController::register
+
+app_data_acq:
+    path: /data_acq
+    controller: App\Controller\DataAcqController::index
+
+app_dev_maintan:
+    path: /dev_maintan
+    controller: App\Controller\DevMaintanController::index
+
+app_service_manage:
+    path: /service_manage
+    controller: App\Controller\ServiceManageController::index
