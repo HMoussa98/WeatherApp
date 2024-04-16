@@ -1,27 +1,46 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
-
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </head>
-    <body>
-        <header>
-            {% if is_granted('ROLE_DEVELOPMENT_MAINTENANCE') %}
-                <h1>Dashboard - Application Development & Maintenance</h1>
-            {% endif %}
-            <a href="#" class="support-btn">Support</a>
-        </header>
-        {% block body %}{% endblock %}
-        <footer>
-            <p>&copy; Copyrights 2024</p>
-        </footer>
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('styles.css') }}"> <!-- Voeg de CSS toe -->
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</head>
+<body>
+<header>
+    {% if app.user %}
+        <h1>Dashboard: Application Development & Maintenance </h1>
+        <div class="logo-container">
+            <img src="{{ asset('AppDevMaint/LogoIWA.jpg') }}" alt="Logo"> <!-- Voeg het logo toe -->
+        </div>
+        <div class="profile-dropdown">
+            <button class="profile-btn">
+                <span class="username">{{ app.user.userIdentifier }}</span> <!-- Gebruikersnaam bovenaan -->
+                <i class="material-icons">account_circle</i> <!-- Profielsymbool -->
+            </button>
+            <div class="dropdown-content">
+                <a href="/weatherData">Weergegevens</a> <!-- Link naar /weatherData -->
+                <a href="/stationData">Weerstations</a>
+                <a href="#">Meldingen</a>
+                <a href="#">Contact</a>
+                <a href="{{ path('app_logout') }}">Logout</a> <!-- Voeg logout-link toe -->
+            </div>
+        </div>
+    {% else %}
+        <a href="{{ path('app_login') }}" class="login-btn">Login</a>
+    {% endif %}
+    <a href="#" class="support-btn">Support</a>
+</header>
+{% block body %}{% endblock %}
+<footer>
+    <p>&copy; Copyrights 2024</p>
+</footer>
+</body>
 </html>

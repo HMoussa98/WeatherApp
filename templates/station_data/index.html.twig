@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Station Data{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('AppDevMaint/styles.css') }}">
+{% endblock %}
+
+{% block body %}
+    <h1>Station Data</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Longitude</th>
+            <th>Latitude</th>
+            <th>Elevation</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for station in stationData %}
+            <tr>
+                <td>{{ station.name }}</td>
+                <td>{{ station.longitude }}</td>
+                <td>{{ station.latitude }}</td>
+                <td>{{ station.elevation }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">No stations available.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

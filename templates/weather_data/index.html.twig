@@ -1,0 +1,222 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DevMaintanController!{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('AppDevMaint/styles.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="example-wrapper">
+        <form action="#" method="GET" class="search-form">
+            <label><input type="checkbox" name="id" value="true"> ID</label>
+            <label><input type="checkbox" name="stn" value="true"> STN</label>
+            <label><input type="checkbox" name="date" value="true"> DATE</label>
+            <label><input type="checkbox" name="time" value="true"> TIME</label>
+            <label><input type="checkbox" name="temp" value="true"> TEMP</label>
+            <label><input type="checkbox" name="dewp" value="true"> DEWP</label>
+            <label><input type="checkbox" name="stp" value="true"> STP</label>
+            <label><input type="checkbox" name="slp" value="true"> SLP</label>
+            <label><input type="checkbox" name="visib" value="true"> VISIB</label>
+            <label><input type="checkbox" name="wdsp" value="true"> WDSP</label>
+            <label><input type="checkbox" name="prcp" value="true"> PRCP</label>
+            <label><input type="checkbox" name="sndp" value="true"> SNDP</label>
+            <label><input type="checkbox" name="frshtt" value="true"> FRSHTT</label>
+            <label><input type="checkbox" name="cldc" value="true"> CLDC</label>
+            <label><input type="checkbox" name="wnddir" value="true"> WNDDIR</label>
+            <button type="submit" class="search-button">Filteren</button>
+        </form>
+
+        <h1>Weather Data</h1>
+        <table>
+            <thead>
+            <tr>
+                {% if app.request.query|length == 0 %}
+                    <th>ID</th>
+                    <th>STN</th>
+                    <th>DATE</th>
+                    <th>TIME</th>
+                    <th>TEMP</th>
+                    <th>DEWP</th>
+                    <th>STP</th>
+                    <th>SLP</th>
+                    <th>VISIB</th>
+                    <th>WDSP</th>
+                    <th>PRCP</th>
+                    <th>SNDP</th>
+                    <th>FRSHTT</th>
+                    <th>CLDC</th>
+                    <th>WNDDIR</th>
+                {% else %}
+                    {% if app.request.query.get('id') == 'true' %}
+                        <th>ID</th>
+                    {% endif %}
+                    {% if app.request.query.get('stn') == 'true' %}
+                        <th>STN</th>
+                    {% endif %}
+                    {% if app.request.query.get('date') == 'true' %}
+                        <th>DATE</th>
+                    {% endif %}
+                    {% if app.request.query.get('time') == 'true' %}
+                        <th>TIME</th>
+                    {% endif %}
+                    {% if app.request.query.get('temp') == 'true' %}
+                        <th>TEMP</th>
+                    {% endif %}
+                    {% if app.request.query.get('dewp') == 'true' %}
+                        <th>DEWP</th>
+                    {% endif %}
+                    {% if app.request.query.get('stp') == 'true' %}
+                        <th>STP</th>
+                    {% endif %}
+                    {% if app.request.query.get('slp') == 'true' %}
+                        <th>SLP</th>
+                    {% endif %}
+                    {% if app.request.query.get('visib') == 'true' %}
+                        <th>VISIB</th>
+                    {% endif %}
+                    {% if app.request.query.get('wdsp') == 'true' %}
+                        <th>WDSP</th>
+                    {% endif %}
+                    {% if app.request.query.get('prcp') == 'true' %}
+                        <th>PRCP</th>
+                    {% endif %}
+                    {% if app.request.query.get('sndp') == 'true' %}
+                        <th>SNDP</th>
+                    {% endif %}
+                    {% if app.request.query.get('frshtt') == 'true' %}
+                        <th>FRSHTT</th>
+                    {% endif %}
+                    {% if app.request.query.get('cldc') == 'true' %}
+                        <th>CLDC</th>
+                    {% endif %}
+                    {% if app.request.query.get('wnddir') == 'true' %}
+                        <th>WNDDIR</th>
+                    {% endif %}
+                {% endif %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for data in weatherData %}
+                <tr>
+                    {% if app.request.query|length == 0 %}
+                        <td>{{ data.id }}</td>
+                        <td>{{ data.STN }}</td>
+                        <td>{{ data.DATE ? data.DATE|date('Y-m-d') : '' }}</td>
+                        <td>{{ data.TIME ? data.TIME|date('H:i:s') : '' }}</td>
+                        <td>{{ data.TEMP }}</td>
+                        <td>{{ data.DEWP }}</td>
+                        <td>{{ data.STP }}</td>
+                        <td>{{ data.SLP }}</td>
+                        <td>{{ data.VISIB }}</td>
+                        <td>{{ data.WDSP }}</td>
+                        {% if data.PRCP is null %}
+                            <td></td>
+                        {% else %}
+                            <td>{{ data.PRCP }}cm</td>
+                        {% endif %}
+                        {% if data.SNDP is null %}
+                            <td></td>
+                        {% else %}
+                            <td>{{ data.SNDP }}cm</td>
+                        {% endif %}
+                        <td>{{ data.FRSHTT }}</td>
+                        <td>{{ data.CLDC }}</td>
+                        <td>{{ data.WNDDIR }}</td>
+                    {% else %}
+                        {% if app.request.query.get('id') == 'true' %}
+                            <td>{{ data.id }}</td>
+                        {% endif %}
+                        {% if app.request.query.get('stn') == 'true' %}
+                            <td>{{ data.STN }}</td>
+                        {% endif %}
+                        {% if app.request.query.get('date') == 'true' %}
+                            <td>{{ data.DATE ? data.DATE|date('Y-m-d') : '' }}</td>
+                        {% endif %}
+                        {% if app.request.query.get('time') == 'true' %}
+                            <td>{{ data.TIME ? data.TIME|date('H:i:s') : '' }}</td>
+                        {% endif %}
+                        {% if app.request.query.get('temp') == 'true' %}
+                            <td>{{ data.TEMP }}</td>
+                        {% endif %}
+                        {% if app.request.query.get('dewp') == 'true' %}
+                            <td>{{ data.DEWP }}</td>
+                        {% endif %}
+                        {% if app.request.query.get('stp') == 'true' %}
+                            <td>{{ data.STP }}</td>
+                        {% endif %}
+                        {% if app.request.query.get('slp') == 'true' %}
+                            <td>{{ data.SLP }}</td>
+                        {% endif %}
+                        {% if app.request.query.get('visib') == 'true' %}
+                            <td>{{ data.VISIB }}</td>
+                        {% endif %}
+                        {% if app.request.query.get('wdsp') == 'true' %}
+                            <td>{{ data.WDSP }}</td>
+                        {% endif %}
+                        {% if app.request.query.get('prcp') == 'true' %}
+                            {% if data.PRCP is null %}
+                                <td></td>
+                            {% else %}
+                                <td>{{ data.PRCP }}cm</td>
+                            {% endif %}
+                        {% endif %}
+                        {% if app.request.query.get('sndp') == 'true' %}
+                            {% if data.SNDP is null %}
+                                <td></td>
+                            {% else %}
+                                <td>{{ data.SNDP }}cm</td>
+                            {% endif %}
+                        {% endif %}
+                        {% if app.request.query.get('frshtt') == 'true' %}
+                            <td>{{ data.FRSHTT }}</td>
+                        {% endif %}
+                        {% if app.request.query.get('cldc') == 'true' %}
+                            <td>{{ data.CLDC }}</td>
+                        {% endif %}
+                        {% if app.request.query.get('wnddir') == 'true' %}
+                            <td>{{ data.WNDDIR }}</td>
+                        {% endif %}
+                    {% endif %}
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="15">No weather data available.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="weather-info" id="weatherInfo">
+            <div id="stationChart">
+                <canvas id="stationChart" class="stations-chart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('.search-form');
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const checkboxes = form.querySelectorAll('input[type="checkbox"]:checked');
+
+                if (checkboxes.length === 0) {
+                    window.location.href = window.location.pathname;
+                    return;
+                }
+
+                const queryString = new URLSearchParams(new FormData(form)).toString();
+
+                window.location.href = window.location.pathname + '?' + queryString;
+            });
+        });
+    </script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ asset('AppDevMaint/script.js') }}"></script>
+{% endblock %}

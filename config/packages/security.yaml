@@ -41,7 +41,7 @@ security:
         - { path: ^/data_acq, roles: [ROLE_DATA_ACQUISITION] }
 
     # DEVELOPMENT_MAINTENANCE
-       # - { path: ^/dev_maintan, roles: [ROLE_DEVELOPMENT_MAINTENANCE] }
+        - { path: ^/dev_maintan, roles: [ROLE_DEVELOPMENT_MAINTENANCE] }
 
     # SERVICE_MANAGEMENT
         - { path: ^/service_manage, roles: [ROLE_SERVICE_MANAGEMENT] }

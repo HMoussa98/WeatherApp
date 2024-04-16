@@ -35,3 +35,15 @@ app_dev_maintan:
 app_service_manage:
     path: /service_manage
     controller: App\Controller\ServiceManageController::index
+# config/routes.yaml
+# config/routes.yaml
+
+post_weather_data:
+    path: /postWeatherData
+    controller: App\Controller\WeatherDataController::postWeatherData
+    methods: [POST]
+
+get_weather_data:
+    path: /weatherData
+    controller: App\Controller\DevMaintanController::weatherData
+    methods: [GET]

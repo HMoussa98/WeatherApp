@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Hello DevMaintanController!{% endblock %}
+
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('AppDevMaint/styles.css') }}">
@@ -8,26 +9,7 @@
 
 {% block body %}
     <div class="example-wrapper">
-        <h1>Dashboard - Application Development & Maintenance</h1>
 
-        {% if app.user %}
-            <h1>You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a></h1>
-        {% endif %}
-
-        <form action="#" method="GET" class="search-form">
-            <input type="text" name="search" class="search-input" placeholder="land/plaats...">
-            <button type="submit" class="search-button">Zoek</button>
-            <button type="button" class="location-button" onclick="getLocation()">
-                Huidige locatie
-                <i class="material-icons">location_on</i>
-            </button>
-        </form>
-        <div class="location-info" id="locationInfo">
-            <!-- Hier worden de locatiegegevens weergegeven -->
-        </div>
-        <div class="weather-info" id="weatherInfo">
-            <!-- Hier worden de weer gegevens van de huidige locatie weergegeven -->
-        </div>
     </div>
-    <script src="{{ asset('AppDevMaint/script.js') }}"></script>
+
 {% endblock %}
