@@ -6,7 +6,7 @@
 
 index:
     path: /
-    controller: App\Controller\SecurityController::login
+    controller: App\Controller\SecurityController::redirectTo
 
 app_admin:
     path: /admin
@@ -15,6 +15,10 @@ app_admin:
 app_admin_dash:
     path: /admin/dashboard
     controller: App\Controller\AdminController::dashboard
+
+user_edit:
+    path: /admin/dashboard/edit_user/{id}
+    controller: App\Controller\AdminController::updateUser
 
 app_login:
     path: /login
