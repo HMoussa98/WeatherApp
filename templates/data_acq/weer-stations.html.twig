@@ -1,0 +1,263 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <style>
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300..700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Lora:wght@400..700&display=swap');
+
+        :root {
+            --color-black: #41423d;
+            --color-neutral-100: #f5f4f0;
+            --color-neutral: #dfddd0;
+            --color-primary-100: #f0f7f5;
+            --color-primary-200: #e0eeeb;
+            --color-primary-300: #cfe5e0;
+            --color-primary: #3a66ca;
+            --color-primary-500: #4f74c8;
+            --color-white: #fbfcfa;
+            --text-font-family: 'Inter', sans-serif;
+            --title-font-family: 'Lora', serif;
+            --title-font-weight: 500;
+        }
+
+        /* Main Styles */
+        main {
+            align-items: center;
+
+            padding: 60px 0;
+            width: 100%;
+        }
+
+        main .content {
+            margin: 0 auto;
+            max-width: 1400px;
+            min-width: 300px;
+            width: 100%;
+        }
+
+        /* Button Styles */
+        .button {
+            background: #3a66ca;
+            border: 0;
+            border-radius: .25rem;
+            color: var(--color-white);
+            cursor: pointer;
+            font: inherit;
+            font-weight: 500;
+            height: 2.5rem;
+            line-height: 2.5rem;
+            padding: 0 1rem;
+
+
+        }
+
+        .button:hover {
+            background: #3a66ca;
+        }
+
+        .button i {
+            font-size: 1.25rem;
+        }
+
+
+        /* Card Styles */
+        .cards {
+            grid-column: 2 / span 12;
+            display: grid;
+            grid-template-columns: repeat(12, minmax(auto, 60px));
+            grid-gap: 40px;
+            justify-content: center; /* Add this line to center the cards horizontally */
+        }
+        .card {
+            border: 10px solid #3a66ca; /* Specify border color and width */
+            border-radius: 4px; /* Adjust border radius as needed */
+            grid-column-end: span 4;
+            display: flex;
+            flex-direction: column;
+            background-color: #39393b;
+        }
+
+
+        .card:hover {
+            transform: translateY(-7px);
+        }
+
+        .card__image-container {
+            width: 100%;
+            padding-top: 56.25%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card__image-container img {
+            width: 100%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .card__content {
+            padding: 20px;
+        }
+        .card__content {
+            padding: 20px;
+
+        }
+        .card__button_contetnet{
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Align items vertically */
+        }
+
+        .card__buttons {
+            display: flex;
+            justify-content: space-between; /* Align buttons horizontally */
+        }
+
+
+        .card__title {
+            margin-bottom: 20px;
+        }
+
+        .card__info {
+            display: flex;
+            align-self: end;
+            align-items: center;
+        }
+
+        .card__price {
+            margin-left: auto;
+            padding: 5px 20px;
+            background-color: #303032;
+            border-radius: 20px;
+        }
+        .table-header {
+            margin: 0 0 5rem;
+            padding: 0 1rem;
+        }
+
+
+        .table-header.grid {
+            align-items: center;
+            display: grid;
+            grid-auto-flow: column;
+            justify-content: space-between;
+        }
+
+        /* Input Styles */
+        select {
+            appearance: none;
+            background-color: transparent;
+            border: 0;
+            cursor: inherit;
+            font: inherit;
+            height: 3rem;
+            margin: 0;
+            padding: 0 1rem 0 0;
+            width: 100%;
+        }
+
+        input[type="number"],
+        input[type="date"],
+        input[type="time"],
+        input[type="text"] {
+            background: var(--color-white);
+            border: 1px solid var(--color-neutral);
+            border-radius: .25rem;
+            color: var(--color-black);
+            display: inline-block;
+            font: inherit;
+            height: 3rem;
+            margin: 0 .5rem;
+            padding: 0 1rem;
+            width: 5rem;
+        }
+        .text--medium {
+            font-family: "Open Sans", sans-serif;
+            font-size: 16px;
+            line-height: 20px;
+            font-weight: 400;
+            color: #ecf0f1;
+        }
+    </style>
+
+    <main>
+
+
+        <div class="content">
+            <section class="table-header grid">
+
+                <!-- Add filter form here -->
+
+                <form method="get" action="{{ path('weer_stations') }}">
+                    <h2>Filters:</h2>
+
+                    <label for="station"> Station Name</label>
+                    <input type="text" name="station" placeholder="Station" value="{{ filters.station }}">
+
+                    <label for="limit"> Limit</label>
+                    <input type="number" name="limit" placeholder="Limit" value="{{ filters.limit }}" min="0">
+
+                    <label for="begin_longitude"> Begin Longitude</label>
+                    <input type="number" name="begin_longitude" placeholder="Begin Longitude" value="{{ filters.begin_longitude }}">
+
+                    <label for="end_longitude"> End Longitude</label>
+                    <input type="number" name="end_longitude" placeholder="End Longitude" value="{{ filters.end_longitude }}">
+
+                    <label for="begin_latitude"> Begin Latitude</label>
+                    <input type="number" name="begin_latitude" placeholder="Begin Latitude" value="{{ filters.begin_latitude }}">
+
+                    <label for="end_latitude"> End Latitude</label>
+                    <input type="number" name="end_latitude" placeholder="End Latitude" value="{{ filters.end_latitude }}">
+
+                    <button type="submit" class="button">Apply Filters</button>
+                    <button type="button" class="button" onclick="clearFilters()">Clear Filters</button>
+                </form>
+
+
+
+            </section>
+            <section class="cards">
+                {% for weatherStation in weatherStations %}
+                    <div class="card">
+                        <div class="card__image-container">
+                            <!-- Add image if available -->
+                            <img src="{{ asset('images/weather-station.jpeg') }}" alt="Station 1 Photo">
+                        </div>
+                        <div class="card__content">
+                            <p class="card__title text--medium">
+                                Station Naam: {{ weatherStation.getName() }}
+                            </p>
+                            <div class="card__title">
+                                <p class="text--medium ">longitude: {{ weatherStation.getLongitude() }}</p>
+
+                            </div>
+                            <div class="card__title">
+                                <p class="text--medium ">latitude: {{ weatherStation.getLatitude() }}</p>
+                            </div>
+                           <div class="card__button_contetnet">
+                               <div class="card__buttons">
+                                   <a href="{{ path('geolocation', {'station': weatherStation.getName()}) }}" class="button">Geolocatie</a>
+                                   <a href="{{ path('nearestlocation', {'station': weatherStation.getName()}) }}" class="button">NearestLocation</a>
+
+
+                               </div>
+
+                           </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </section>
+        </div>
+    </main>
+    {% block javascripts %}
+        {{ parent() }}
+        <script src="{{ asset('DataAquisition/script.js') }}"></script>
+
+    {% endblock %}
+
+{% endblock %}

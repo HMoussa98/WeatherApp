@@ -1,6 +1,11 @@
 <?php
 
 namespace App\Controller;
+use App\Entity\GeoLocation;
+use App\Entity\Station;
+use App\Repository\GeoLocationRepository;
+use App\Repository\NearstLocationRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -164,4 +169,98 @@ class DataAcqController extends AbstractController
             ],
         ]);
     }
+
+
+
+    #[Route('/weer-stations', name: 'weer_stations')]
+    public function weatherStations(Request $request, ManagerRegistry $doctrine): Response
+    {
+        $station = $request->query->get('station');
+        $limit = $request->query->get('limit');
+        $beginLongitude = $request->query->get('begin_longitude');
+        $endLongitude = $request->query->get('end_longitude');
+        $beginLatitude = $request->query->get('begin_latitude');
+        $endLatitude = $request->query->get('end_latitude');
+
+        // Retrieve weather stations with geolocation information
+        $repository = $doctrine->getRepository(Station::class);
+        $queryBuilder = $repository->createQueryBuilder('s');
+
+        // Apply filters if provided
+        if ($station) {
+            $queryBuilder->andWhere('s.name LIKE :station')
+                ->setParameter('station', '%'.$station.'%');
+        }
+
+        if ($beginLongitude && $endLongitude) {
+            $queryBuilder->andWhere('s.longitude BETWEEN :beginLongitude AND :endLongitude')
+                ->setParameter('beginLongitude', $beginLongitude)
+                ->setParameter('endLongitude', $endLongitude);
+        } elseif ($beginLongitude) {
+            $queryBuilder->andWhere('s.longitude >= :beginLongitude')
+                ->setParameter('beginLongitude', $beginLongitude);
+        } elseif ($endLongitude) {
+            $queryBuilder->andWhere('s.longitude <= :endLongitude')
+                ->setParameter('endLongitude', $endLongitude);
+        }
+
+        if ($beginLatitude && $endLatitude) {
+            $queryBuilder->andWhere('s.latitude BETWEEN :beginLatitude AND :endLatitude')
+                ->setParameter('beginLatitude', $beginLatitude)
+                ->setParameter('endLatitude', $endLatitude);
+        } elseif ($beginLatitude) {
+            $queryBuilder->andWhere('s.latitude >= :beginLatitude')
+                ->setParameter('beginLatitude', $beginLatitude);
+        } elseif ($endLatitude) {
+            $queryBuilder->andWhere('s.latitude <= :endLatitude')
+                ->setParameter('endLatitude', $endLatitude);
+        }
+
+        if ($limit) {
+            $queryBuilder->setMaxResults($limit);
+        } else {
+            $queryBuilder->setMaxResults(10);
+        }
+
+        $weatherStations = $queryBuilder->getQuery()->getResult();
+
+        // Pass the data to the view
+        return $this->render('data_acq/weer-stations.html.twig', [
+            'weatherStations' => $weatherStations,
+            'filters' => [
+                'station' => $station,
+                'limit' => $limit,
+                'begin_longitude' => $beginLongitude,
+                'end_longitude' => $endLongitude,
+                'begin_latitude' => $beginLatitude,
+                'end_latitude' => $endLatitude,
+            ],
+        ]);
+    }
+
+    #[Route('geolocation/{station}', name: 'geolocation')]
+    public function geolocation($station, GeoLocationRepository $geoLocationRepository): Response
+    {
+        $geoLocation = $geoLocationRepository->findOneBy(['stationName' => $station]);
+
+        return $this->render('data_acq/geoLocation.html.twig', [
+            'geoLocation' => $geoLocation,
+        ]);
+    }
+
+
+
+    #[Route('nearestlocation/{station}', name: 'nearestlocation')]
+    public function nearestlocation($station,NearstLocationRepository $nearestLocationRepository): Response
+    {
+        // Assuming you have a service to calculate the nearest location
+        $nearestLocation = $nearestLocationRepository->findOneBy(['stationName' => $station]);
+
+        return $this->render('data_acq/nearestLocation.html.twig', [
+            'nearestLocation' => $nearestLocation,
+            'stationName'=>$station
+
+        ]);
+    }
+
 }

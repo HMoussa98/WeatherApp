@@ -8,181 +8,28 @@
 
     <style>
 
-        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css');
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300..700&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Lora:wght@400..700&display=swap');
-
-        :root {
-            --color-black: #41423d;
-            --color-neutral-100: #f5f4f0;
-            --color-neutral: #dfddd0;
-            --color-primary-100: #f0f7f5;
-            --color-primary-200: #e0eeeb;
-            --color-primary-300: #cfe5e0;
-            --color-primary: #3f9783;
-            --color-primary-500: #327969;
-            --color-white: #fbfcfa;
-            --text-font-family: 'Inter', sans-serif;
-            --title-font-family: 'Lora', serif;
-            --title-font-weight: 500;
-        }
-
-
-
-        h1 {
-            color: var(--color-primary);
-            font-family: var(--title-font-family);
-            font-size: 2.5rem;
-            font-weight: var(--title-font-weight);
-            margin: 0;
-        }
-
-        a {
-            color: var(--color-primary);
-            font-size: .875rem;
-            font-weight: 500;
-            text-decoration: none;
-        }
-        a:hover { color: var(--color-primary-500); }
-
-        /*
-          main
-        */
-
-        main {
-            align-items: center;
-            display: grid;
-            min-height: 100vh;
-            padding: 2.5rem;
-            width: 100%;
-        }
-
-        main .content {
-            margin: 0 auto;
-            max-width: 1400px;
-            width: 100%;
-        }
-
-        .main-header { margin: 0 0 2.5rem; }
-        .main-header.grid {
-            align-items: center;
-            display: grid;
-            grid-auto-flow: column;
-            justify-content: space-between;
-        }
-
-        /*
-          buttons
-        */
-
-        .button {
-            background: var(--color-primary);
-            border: 0;
-            border-radius: .25rem;
-            color: var(--color-white);
-            cursor: pointer;
-            font: inherit;
-            font-weight: 500;
-            height: 3rem;
-            line-height: 3rem;
-            padding: 0 2rem;
-
-            /* grid */
-            align-items: center;
-            display: grid;
-            gap: .75rem;
-            grid-auto-flow: column;
-        }
-        .button:hover { background: var(--color-primary-500); }
-        .button i { font-size: 1.25rem; }
-
-
-
-        .card {
-            border: 1px solid var(--color-neutral);
-            border-radius: .25rem;
-            background: var(--color-white);
-            margin: 0 0 2.5rem;
-            overflow: auto;
-            padding: 1.5rem 1.5rem 2.5rem;
-            width: 100%;
-        }
-
-
-
-        select {
-            appearance: none;
-            background-color: transparent;
-            border: 0;
-            cursor: inherit;
-            font: inherit;
-            height: 3rem;
-            margin: 0;
-            padding: 0 1rem 0 0;
-            width: 100%;
-        }
-
-        input[type="number"],
-        input[type="text"] {
-            background: var(--color-white);
-            border: 1px solid var(--color-neutral);
-            border-radius: .25rem;
-            color: var(--color-black);
-            display: inline-block;
-            font: inherit;
-            height: 3rem;
-            margin: 0 .5rem;
-            padding: 0 1rem;
-            width: 5rem;
-        }
-
-        .paging span { margin: 0 .75rem; }
-
-        /*
-          table
-        */
-
-        table { border-collapse: collapse; width: 100%; }
-        td, th {
-            border-bottom: 1px solid var(--color-primary-300);
-            font-size: 1rem;
-            text-align: left;
-            white-space: nowrap;
-        }
-        th { padding: 1.5rem 1rem; }
-        td { padding: 1rem; }
-
-        tbody tr { cursor: pointer; }
-        tbody tr.selected td { background: var(--color-primary-200); }
-        tbody tr:hover:not(.selected) td,
-        tbody tr.hover:not(.selected) td {
-            background: var(--color-primary-100);
-        }
-
-        .table-footer, .table-header { font-size: .875rem; }
-        .table-footer { margin: -1.5rem 0 0; }
-        .table-header { margin: 0 0 1rem; }
-
-        .table-footer.grid,
-        .table-header.grid {
-            align-items: center;
-            display: grid;
-            grid-auto-flow: column;
-            justify-content: space-between;
-        }
-
     </style>
 
+    {% block stylesheets %}
+        {{ parent() }}
+        <link rel="stylesheet" href="{{ asset('DataAquisition/styles.css') }}">
+        <link rel="stylesheet" href="{{ asset('DataAquisition/index.css') }}">
+    {% endblock %}
     <main>
         <div class="content">
             <section class="main-header grid">
-                <h1>Weather Data</h1>
+
+                <h1 class="h1tag">WeerData & Visualisatie  </h1>
                 <!-- Add any additional buttons if needed -->
             </section>
 
             <section class="table-header grid">
+
                 <!-- Add filter form here -->
+
                 <form method="get" action="{{ path('app_data_acq') }}">
+                    <h2 class="h2tag">Filters:</h2>
+
                     <label for="stn"> Station Naam</label>
                     <input type="text" name="stn" placeholder="Station" value="{{ filters.stn }}">
                     <label for="startDate"> Begin Datum</label>
@@ -190,9 +37,11 @@
                     <label for="endDate"> Eind Datum</label>
                     <input type="date" name="endDate" value="{{ filters.endDate }}">
                     <label for="startTime"> Begin Tijd</label>
-                    <input type="text" name="startTime" placeholder="HH:mm:ss" value="{{ filters.startTime }}" pattern="\d{2}:\d{2}:\d{2}" title="Enter start time in HH:mm:ss format">
+                    <input type="text" name="startTime" placeholder="HH:mm:ss" value="{{ filters.startTime }}"
+                           pattern="\d{2}:\d{2}:\d{2}" title="Enter start time in HH:mm:ss format">
                     <label for="endTime"> Eind Tijd</label>
-                    <input type="text" name="endTime" placeholder="HH:mm:ss" value="{{ filters.endTime }}" pattern="\d{2}:\d{2}:\d{2}" title="Enter end time in HH:mm:ss format">
+                    <input type="text" name="endTime" placeholder="HH:mm:ss" value="{{ filters.endTime }}"
+                           pattern="\d{2}:\d{2}:\d{2}" title="Enter end time in HH:mm:ss format">
                     <label for="limit"> Rijn Limiet</label>
                     <input type="number" name="limit" placeholder="Limit" data-value="10" value="{{ filters.limit }}">
                     <!-- Add other text inputs for filters here -->
@@ -256,142 +105,132 @@
         </div>
 
 
+        <div class="card">
+            <h2 class="h2tag">Station, Temperature, DEWP, VISIB, WDSP, PRCP, SNDP, CLDC en WNDDIR Chart</h2>
+            <canvas id="weatherChart" width="400" height="150"></canvas>
+        </div>
 
 
-
-     <canvas id="weatherChart" width="400" height="150"></canvas>
-     <canvas id="weatherChartWithSTPSLPFRSHTT" width="400" height="150"></canvas>
-
-
-     {% block javascripts %}
-         {{ parent() }}
-         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-         <script>
-             // Initialize empty arrays for labels and datasets
-
-
-
-
-
-             function visualizeData() {
-                 // Initialize empty arrays for labels and datasets for both charts
-                 var labels = ['TEMP', 'DEWP', 'VISIB', 'WDSP', 'PRCP', 'SNDP', 'CLDC', 'WNDDIR'];
-                 var datasets = [];
-                 var datasetsWithSTPSLPFRSHTT = [];
-
-                 // Function to generate random RGB color
-                 function getRandomColor() {
-                     var r = Math.floor(Math.random() * 256);
-                     var g = Math.floor(Math.random() * 256);
-                     var b = Math.floor(Math.random() * 256);
-                     return 'rgba(' + r + ', ' + g + ', ' + b + ', 0.2)';
-                 }
-
-                 // Use the Twig for loop to populate the datasets
-                 {% for data in weatherData %}
-                 var data = [
-                     {{ data.TEMP }},
-                     {{ data.DEWP }},
-                     {{ data.VISIB }},
-                     {{ data.WDSP }},
-                     {{ data.PRCP }},
-                     {{ data.SNDP }},
-                     {{ data.CLDC }},
-                     {{ data.WNDDIR }}
-                 ];
-
-                 // Push data for both charts with random colors
-                 datasets.push({
-                     label: 'Station {{ data.STN }}',
-                     data: data,
-                     backgroundColor: getRandomColor(), // Random background color
-                     borderColor: getRandomColor(), // Random border color
-                     borderWidth: 1
-                 });
-
-                 // Push data for the chart with STP, SLP, and FRSHTT with random colors
-                 datasetsWithSTPSLPFRSHTT.push({
-                     label: 'Station {{ data.STN }}, FTT {{ data.FRSHTT }}',
-                     data: [
-                         {{ data.STP }},
-                         {{ data.SLP }}
-                     ],
-                     backgroundColor: getRandomColor(), // Random background color
-                     borderColor: getRandomColor(), // Random border color
-                     borderWidth: 1
-                 });
-                 {% endfor %}
-
-                 // Create the chart without STP, SLP, and FRSHTT
-                 var ctx = document.getElementById('weatherChart').getContext('2d');
-                 var weatherChart = new Chart(ctx, {
-                     type: 'bar',
-                     data: {
-                         labels: labels,
-                         datasets: datasets
-                     },
-                     options: {
-                         scales: {
-                             y: {
-                                 beginAtZero: true,
-                                 ticks: {
-                                     stepSize: 0.9, // Set the step size to 1000
-                                 },
-                                 title: {
-                                     display: true,
-                                     text: 'Values'
-                                 }
-                             }
-                         }
-                     }
-                 });
-
-                 // Create the chart with only STP, SLP, and FRSHTT
-                 var ctxWithSTPSLPFRSHTT = document.getElementById('weatherChartWithSTPSLPFRSHTT').getContext('2d');
-                 var weatherChartWithSTPSLPFRSHTT = new Chart(ctxWithSTPSLPFRSHTT, {
-                     type: 'bar',
-                     data: {
-                         labels: ['STP', 'SLP'],
-                         datasets: datasetsWithSTPSLPFRSHTT
-                     },
-                     options: {
-                         scales: {
-                             y: {
-                                 ticks: {
-                                     stepSize: 100, // Set the step size to 1000
-                                 },
-                                 beginAtZero: true,
-                                 title: {
-                                     display: true,
-                                     text: 'Values'
-                                 }
-                             }
-                         }
-                     }
-                 });
-             }
-
-
-
-
-
-             function clearFilters() {
-                 // Reset all input values to empty
-                 document.querySelectorAll('input').forEach(input => {
-                     input.value = '';
-                 });
-
-                 // Submit the form
-                 document.querySelector('form').submit();
-             }
-         </script>
-     {% endblock %}
-
-
-
-
+        <div class="card">
+            <h2 class="h2tag">Station FRSHTT STP, SLP Chart</h2>
+            <canvas id="weatherChartWithSTPSLPFRSHTT" width="400" height="150"></canvas>
+        </div>
 
     </main>
+
+
+    {% block javascripts %}
+        {{ parent() }}
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="{{ asset('DataAquisition/script.js') }}"></script>
+        <script>
+            // Initialize empty arrays for labels and datasets
+
+
+            function visualizeData() {
+                // Initialize empty arrays for labels and datasets for both charts
+                var labels = ['TEMP', 'DEWP', 'VISIB', 'WDSP', 'PRCP', 'SNDP', 'CLDC', 'WNDDIR'];
+                var datasets = [];
+                var datasetsWithSTPSLPFRSHTT = [];
+
+                // Function to generate random RGB color
+                function getRandomColor() {
+                    var r = Math.floor(Math.random() * 128) + 128; // Ensures a range of 128 to 255
+                    var g = Math.floor(Math.random() * 128) + 128; // Ensures a range of 128 to 255
+                    var b = Math.floor(Math.random() * 128) + 128; // Ensures a range of 128 to 255
+                    return 'rgba(' + r + ', ' + g + ', ' + b + ', 1)'; // Fully opaque color
+                }
+
+
+                // Use the Twig for loop to populate the datasets
+                {% for data in weatherData %}
+                var data = [
+                    {{ data.TEMP }},
+                    {{ data.DEWP }},
+                    {{ data.VISIB }},
+                    {{ data.WDSP }},
+                    {{ data.PRCP }},
+                    {{ data.SNDP }},
+                    {{ data.CLDC }},
+                    {{ data.WNDDIR }}
+                ];
+
+                // Push data for both charts with random colors
+                datasets.push({
+                    label: 'Station {{ data.STN }}',
+                    data: data,
+                    backgroundColor: getRandomColor(), // Random background color
+                    borderColor: getRandomColor(), // Random border color
+                    borderWidth: 1
+                });
+
+                // Push data for the chart with STP, SLP, and FRSHTT with random colors
+                datasetsWithSTPSLPFRSHTT.push({
+                    label: 'Station {{ data.STN }}, FTT {{ data.FRSHTT }}',
+                    data: [
+                        {{ data.STP }},
+                        {{ data.SLP }}
+                    ],
+                    backgroundColor: getRandomColor(), // Random background color
+                    borderColor: getRandomColor(), // Random border color
+                    borderWidth: 1
+                });
+                {% endfor %}
+
+                // Create the chart without STP, SLP, and FRSHTT
+                var ctx = document.getElementById('weatherChart').getContext('2d');
+                var weatherChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: datasets
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: false,
+
+                                title: {
+                                    display: true,
+                                    text: 'Values'
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // Create the chart with only STP, SLP, and FRSHTT
+                var ctxWithSTPSLPFRSHTT = document.getElementById('weatherChartWithSTPSLPFRSHTT').getContext('2d');
+                var weatherChartWithSTPSLPFRSHTT = new Chart(ctxWithSTPSLPFRSHTT, {
+                    type: 'bar',
+                    data: {
+                        labels: ['STP', 'SLP'],
+                        datasets: datasetsWithSTPSLPFRSHTT
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                ticks: {
+                                    stepSize: 100, // Set the step size to 1000
+                                },
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Values'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+        </script>
+    {% endblock %}
+
+
+
+
+
     <!-- Add this where you want the chart to appear -->
 
 

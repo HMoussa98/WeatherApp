@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+    {% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('DataAquisition/styles.css') }}">
+        <link rel="stylesheet" href="{{ asset('DataAquisition/geo.css') }}">
+    {% endblock %}
+
+
+
+    <main>
+        <div class="content">
+            <section class="main-header grid">
+                <h1 class="h1tag">Geolocation Data van Station: {{ geoLocation.stationName }}</h1>
+                <!-- Add any additional buttons if needed -->
+            </section>
+
+            <div class="card">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Station</th>
+                        <th>CountryCode</th>
+                        <th>Island</th>
+                        <th>County</th>
+                        <th>Place</th>
+                        <th>Hamlet</th>
+                        <th>Town</th>
+                        <th>Municipality</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{ geoLocation.id }}</td>
+                        <td>{{ geoLocation.stationName | default('NONE') }}</td>
+                        <td>{{ geoLocation.countryCode | default('NONE') }}</td>
+                        <td>{{ geoLocation.island | default('NONE') }}</td>
+                        <td>{{ geoLocation.county | default('NONE') }}</td>
+                        <td>{{ geoLocation.place | default('NONE') }}</td>
+                        <td>{{ geoLocation.hamlet | default('NONE') }}</td>
+                        <td>{{ geoLocation.town | default('NONE') }}</td>
+                        <td>{{ geoLocation.municipality | default('NONE') }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>State District</th>
+                        <th>Administrative</th>
+                        <th>State</th>
+                        <th>Village</th>
+                        <th>Region</th>
+                        <th>Province</th>
+                        <th>City</th>
+                        <th>Locality</th>
+                        <th>Postcode</th>
+                        <th>Country</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{ geoLocation.stateDistrict | default('NONE') }}</td>
+                        <td>{{ geoLocation.administrative | default('NONE') }}</td>
+                        <td>{{ geoLocation.state | default('NONE') }}</td>
+                        <td>{{ geoLocation.village | default('NONE') }}</td>
+                        <td>{{ geoLocation.region | default('NONE') }}</td>
+                        <td>{{ geoLocation.province | default('NONE') }}</td>
+                        <td>{{ geoLocation.city | default('NONE') }}</td>
+                        <td>{{ geoLocation.locality | default('NONE') }}</td>
+                        <td>{{ geoLocation.postcode | default('NONE') }}</td>
+                        <td>{{ geoLocation.country | default('NONE') }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        </div>
+    </main>
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('DataAquisition/script.js') }}"></script>
+
+{% endblock %}
+
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
