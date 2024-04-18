@@ -47,3 +47,17 @@ get_weather_data:
     path: /weatherData
     controller: App\Controller\DevMaintanController::weatherData
     methods: [GET]
+
+weer_stations:
+    path: /weer-stations
+    controller: App\Controller\DataAcqController::weatherStations
+    methods: [GET]
+
+geolocation:
+    path: '/geolocation/{station}'
+    controller: 'App\Controller\DataAcqController::geolocation'
+
+nearestlocation:
+    path: '/nearestlocation/{station}'
+    controller: 'App\Controller\DataAcqController::nearestlocation'
+
