@@ -20,10 +20,12 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('first_name', null, [
                 'label' => false,
+                'mapped' => false,
                 'attr' => ['placeholder' => 'First name', 'class' => 'form-control']
             ])
             ->add('last_name', null, [
                 'label' => false,
+                'mapped' => false,
                 'attr' => ['placeholder' => 'Last name', 'class' => 'form-control']
             ])
             ->add('email', null, [

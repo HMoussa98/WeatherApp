@@ -16,9 +16,7 @@ class AdminController extends AbstractController
     #[Route('/admin', name: 'app_admin')]
     public function index(): Response
     {
-        return $this->render('admin/index.html.twig', [
-            'controller_name' => 'AdminController',
-        ]);
+        return $this->redirectToRoute('app_admin_dash');
     }
 
     #[Route('/admin/dashboard', name: 'app_admin_dash')]
@@ -32,31 +30,32 @@ class AdminController extends AbstractController
         ]);
     }
 
-    // #[Route('/admin/dashboard/edit_user/{id}', name: 'user_edit')]
-    // public function updateUser(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, int $id): Response
-    // {
-    //     $user = $entityManager->getRepository(Users::class)->find($id);
+    #[Route('/admin/dashboard/edit_user/{id}', name: 'user_edit')]
+    public function updateUser(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, int $id): Response
+    {
+        $user = $entityManager->getRepository(Users::class)->find($id);
 
-    //     if (!$user) {
-    //         throw $this->createNotFoundException(
-    //             'No user found for id '.$id
-    //         );
-    //     }
+        if (!$user) {
+            throw $this->createNotFoundException(
+                'No user found for id '.$id
+            );
+        }
 
-    //     // $user->setName('New product name!');
-    //     // $entityManager->flush();
+        // $user->setName('New product name!');
+        // $entityManager->flush();
 
-    //     $form = $this->createForm(UpdateUserFormType::class, $user);
-    //     $form->handleRequest($request);
+        $form = $this->createForm(UpdateUserFormType::class, $user);
+        $form->handleRequest($request);
 
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $entityManager->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
 
-    //         return $this->redirectToRoute('app_admin_dash');
-    //     }
+            return $this->redirectToRoute('app_admin_dash');
+        }
 
-    //     return $this->render('admin/updateUser.html.twig', [
-    //         // 'form' => $form->createView()
-    //     ]);
-    // }
+        return $this->render('admin/updateUser.html.twig', [
+            'form' => $form,
+            'user' => $user
+        ]);
+    }
 }
