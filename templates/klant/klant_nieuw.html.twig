@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nieuwe Klant{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="my-4 fw-bold">Nieuwe Klant Toevoegen</h1>
+
+        <form method="post" action="{{ path('klant_nieuw') }}" class="my-4">
+            <div class="row mb-3">
+                <label for="type-select" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    {{ form_row(form.type, {'attr': {'id': 'type-select', 'class': 'form-control'}}) }}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="naam" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    {{ form_row(form.naam, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="email" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    {{ form_row(form.email, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="telefoonnummer" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    {{ form_row(form.telefoonnummer, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+            <div id="date-fields" class="row mb-3">
+                <label class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-4">
+                    {{ form_row(form.startdatum, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <label class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-4">
+                    {{ form_row(form.einddatum, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-10 offset-sm-2">
+                    <button type="submit" class="btn btn-success">Opslaan</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

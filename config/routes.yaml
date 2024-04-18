@@ -1,0 +1,62 @@
+# controllers:
+#     resource:
+#         path: ../src/Controller/
+#         namespace: App\Controller
+#     type: attribute
+
+index:
+    path: /
+    controller: App\Controller\SecurityController::redirectTo
+
+app_admin:
+    path: /admin
+    controller: App\Controller\AdminController::index
+
+app_admin_dash:
+    path: /admin/dashboard
+    controller: App\Controller\AdminController::dashboard
+
+user_edit:
+    path: /admin/dashboard/edit_user/{id}
+    controller: App\Controller\AdminController::updateUser
+
+app_login:
+    path: /login
+    controller: App\Controller\SecurityController::login
+
+app_logout:
+    path: /logout
+    controller: App\Security\SecurityController::logout
+
+register:
+    path: /register
+    controller: App\Controller\RegistrationController::register
+
+app_data_acq:
+    path: /data_acq
+    controller: App\Controller\DataAcqController::index
+
+app_dev_maintan:
+    path: /dev_maintan
+    controller: App\Controller\DevMaintanController::index
+
+app_service_manage:
+    path: /service_manage
+    controller: App\Controller\ServiceManageController::index
+
+klant_nieuw:
+    path: /klant_nieuw
+    controller: App\Controller\KlantController::nieuw
+
+klant_verwijderen:
+    path: /klant_verwijderen
+    controller: App\Controller\KlantController::verwijderen
+
+contract_index:
+    path: /contract_index
+    controller: App\Controller\ContractController::index
+    methods: GET
+
+abbo_bewerken:
+    path: /abbo_bewerken
+    controller: App\Controller\AbboController::bewerken

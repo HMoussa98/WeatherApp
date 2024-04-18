@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contract Overzicht{% endblock %}
+
+{% block body %}
+    <header class="bg-blue p-0">
+        <!-- Header inhoud hier -->
+    </header>
+
+    <div class="container-fluid">
+        <h1>Contract Overzicht</h1>
+
+        {# Zoekformulier #}
+        <form method="get" action="{{ path('contract_index') }}">
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control" placeholder="Zoek contracten..." value="{{ app.request.query.get('search', '') }}">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-default">Zoeken</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="scrollable-table">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Klant ID</th>
+                    <th>Startdatum</th>
+                    <th>Einddatum</th>
+                    <th>Acties</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for contract in contracts %}
+                    <tr>
+                        <td>{{ contract.id }}</td>
+                        <td>{{ contract.klant ? contract.klant.id : 'Geen klant toegewezen' }}</td>
+                        <td>{{ contract.startdatum|date('d-m-Y') }}</td>
+                        <td>{{ contract.einddatum|date('d-m-Y') }}</td>
+                        <!-- Voeg hier eventuele actieknoppen toe -->
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="7">Geen contracten gevonden.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+{% endblock %}

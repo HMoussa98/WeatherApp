@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Service Management Dashboard{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Service Management Dashboard</h1>
+
+        <div class="mb-3">
+            <form method="get" action="{{ path('app_service_manage') }}">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control" placeholder="Zoek klanten..." value="{{ app.request.query.get('search', '') }}">
+                    <button type="submit" class="btn btn-primary">Zoeken</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="mb-3">
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-primary" data-filter="all">Alle</button>
+                <button type="button" class="btn btn-primary" data-filter="Abonnement">Abonnement</button>
+                <button type="button" class="btn btn-primary" data-filter="Contract">Contract</button>
+            </div>
+        </div>
+
+        <div class="scrollable-table">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Naam</th>
+                    <th>Email</th>
+                    <th>Telefoonnummer</th>
+                    <th>Type</th>
+                    <th>Acties</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if klanten is not empty %}
+                    {% for klant in klanten %}
+                        <tr data-type="{{ klant.type }}">
+                            <td>{{ klant.id }}</td>
+                            <td>{{ klant.naam }}</td>
+                            <td>{{ klant.email }}</td>
+                            <td>{{ klant.telefoonnummer }}</td>
+                            <td>{{ klant.type }}</td>
+                            <td>
+                                <a href="{{ path('klant_verwijderen', { 'id': klant.id }) }}" class="btn btn-danger" onclick="return confirm('Weet je zeker dat je deze klant wilt verwijderen?');">Verwijderen</a>
+                                {% if klant.type == 'Contract' %}
+                                    <a href="{{ path('contract_index', { 'id': klant.id }) }}" class="btn btn-primary">Details</a>
+                                {% elseif klant.type == 'Abonnement' %}
+                                    <a href="{{ path('abbo_bewerken', { 'id': klant.id }) }}" class="btn btn-primary">Bewerken</a>
+                                {% else %}
+                                    <a href="#" class="btn btn-primary">Details</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="6">Geen klanten gevonden.</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+        <a href="{{ path('klant_nieuw') }}" class="btn btn-primary">Nieuwe Klant Toevoegen</a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.btn-group button');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const filterValue = this.dataset.filter;
+                    const rows = document.querySelectorAll('tbody tr');
+
+                    rows.forEach(row => {
+                        if (filterValue === 'all') {
+                            row.style.display = 'table-row';
+                        } else {
+                            const type = row.dataset.type;
+
+                            if (type === filterValue) {
+                                row.style.display = 'table-row';
+                            } else {
+                                row.style.display = 'none';
+                            }
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+{% endblock %}
