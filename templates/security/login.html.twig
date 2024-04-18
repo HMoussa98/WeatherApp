@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+
+<main>
+    <div class="container my-5 container-h">
+        <div class="vertical-center">
+            <div class="row">
+                <div class="col-6">
+                    <form method="post" class="register-form float-end col-8">
+                        <h1 class="h2 mb-3">Login</h1>
+                        {% if error %}
+                            <div class="alert alert-danger mb-3">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
+                        <div class="mb-3">
+                            <span class="me-2"><span class="material-icons">mail</span></span>
+                            <input type="email" name="email" id="inputEmail" class="form-control d-inline w-75" autocomplete="email" placeholder="Email" required autofocus>
+                        </div>
+                        <div class="mb-3">
+                            <span class="me-2"><span class="material-icons">lock</span></span>
+                            <input type="password" name="password" id="inputPassword" class="form-control d-inline w-75" placeholder="Wachtwoord" autocomplete="current-password" required>
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                        </div>
+                        <div class="mb-3">
+                            <a class="a-link text-primary fw-bold" href="#">Wachtwoord vergeten?</a>
+                        </div>
+                        <div><button class="btn btn-primary px-5" type="submit">Login</button></div>
+                    </form>
+                </div>
+                <div class="col-6 border-line">
+                    <img src="https://i.postimg.cc/X7L8GXnL/LogoIWA.jpg" alt="logo">
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

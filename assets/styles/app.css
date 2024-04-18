@@ -1,0 +1,134 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+} 
+
+.collapse {
+  visibility: visible;
+}
+
+.bg-blue {
+  background: #3A66CA;
+}
+
+body { 
+  background: none; 
+  margin: 0; 
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+header .nav-link:hover { 
+  color: #df4a4a!important; 
+}
+
+main .register-form .wrapper div {
+  display: inline;
+}
+
+main .register-form .roles div {
+  display: inline; 
+}
+
+main .register-form .roles .required {
+  display: inline; 
+}
+
+main .register-form #registration_form_roles, 
+main .register-form #update_user_form_roles {
+  display: block; 
+}
+
+main .register-form #registration_form_roles input[type="checkbox"],
+main .register-form #update_user_form_roles input[type="checkbox"] {
+  border-radius: .25em;
+  float: left;
+  margin-left: 5.5em;
+  margin-right: 10px;
+  width: 1em;
+  height: 1em;
+  margin-top: .25em;
+}
+
+main .register-form #registration_form_roles label,
+main .register-form #update_user_form_roles label {
+  display: block; 
+}
+
+main .register-form .form-control{
+  background-color: #B5B2B2; 
+  border-radius: 0;
+} 
+
+main .register-form .form-control:focus{
+  outline: 0;
+  box-shadow: none;
+  border-color: #B5B2B2;
+} 
+
+main .material-icons { 
+  vertical-align: middle; 
+  font-size: 32px;
+  display: inline;
+}
+
+main .vertical-center {
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  width: 100%;
+}
+
+main .container-h {
+  height: 500px;
+  position: relative;
+}
+
+main .border-line {
+  border-left: 2px solid #B5B2B2;
+  height: 285px;
+  padding-left: 80px;
+  padding-top: 28px;
+}
+
+main .border-line img {
+  height: 200px;
+}
+
+main form .a-link:hover {
+  color: #df4a4a!important;
+}
+
+::-moz-placeholder { 
+  color: #fff; opacity: 1; 
+  font-weight: bold; /* Firefox */ 
+}
+
+::placeholder { color: #fff; 
+  opacity: 1; 
+  font-weight: bold; /* Firefox */ 
+}
+
+::-ms-input-placeholder { 
+  color: #FFF; 
+  font-weight: bold; /* Edge 12-18 */ 
+}
+
+footer { 
+  background: #3A66CA; 
+  padding: 22px 32px; 
+  text-align: center; 
+  position: fixed; 
+  bottom: 0; 
+  width: 100%;
+}
+
+footer p { 
+  margin: 0; 
+  font-weight: bold;
+} 

@@ -26,7 +26,10 @@
                         </button>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                {% if is_granted('ROLE_ADMIN') %}
+                                {% if app.request.attributes.get('_route') == 'app_admin_dash' or
+                                app.request.attributes.get('_route') == 'user_edit' or
+                                app.request.attributes.get('_route') == 'user_delete' or
+                                app.request.attributes.get('_route') == 'register' %}
                                 <li class="nav-item">
                                     <a class="nav-link text-white" aria-current="page" href="/admin/dashboard">Dashboard</a>
                                 </li>
@@ -52,20 +55,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="profile-dropdown">
-                            <button class="profile-btn">
-                                <span class="username">{{ app.user.userIdentifier }}</span> <!-- Gebruikersnaam bovenaan -->
-                                <i class="material-icons">account_circle</i> <!-- Profielsymbool -->
-                            </button>
-                            <div class="dropdown-content">
-                                <a href="/weatherData">Weergegevens</a> <!-- Link naar /weatherData -->
-                                <a href="/stationData">Weerstations</a>
-                                <a href="#">Meldingen</a>
-                                <a href="#">Contact</a>
-                                <a href="{{ path('app_logout') }}">Logout</a> <!-- Voeg logout-link toe -->
-                            </div>
-
-                        </div>
+                    </div>
                 </nav>
             </div>
         </header>

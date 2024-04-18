@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+
+<main>
+    <div class="container py-5">
+        <h1 class="h3 mb-4">Gebruiker bewerken</h1>
+
+        <div class="register-form w-50">
+            {{ form_errors(form) }}
+
+            {{ form_start(form, {'attr': {'class': 'col-10'}}) }}
+            <div class="row">
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-2"><span class="material-icons">person</span></div>
+                        <div class="col-10 ps-0">{{ form_row(form.first_name) }}</div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    {{ form_row(form.last_name) }}
+                </div>
+                <div class="my-3">
+                    <div class="row">
+                        <div class="col-1"><span class="material-icons">mail</span></div>
+                        <div class="col-11 ps-0"><div class="d-inline wrapper">{{ form_row(form.email) }}</div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="roles mb-3">
+                <span class="material-icons">assignment_ind</span>
+                {{ form_row(form.roles) }}
+            </div>
+            <div><button type="submit" class="btn btn-success">Opslaan</button></div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</main>
+
+<script type="text/javascript">
+    var first_name = document.getElementById('update_user_form_first_name');
+    var last_name = document.getElementById('update_user_form_last_name');
+    first_name.value = '{{ user.first_name }}';
+    last_name.value = '{{ user.last_name }}';
+</script>
+
+{% endblock %}
