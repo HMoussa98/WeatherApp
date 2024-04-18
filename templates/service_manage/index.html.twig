@@ -6,23 +6,6 @@
     <div class="container">
         <h1>Service Management Dashboard</h1>
 
-        <div class="mb-3">
-            <form method="get" action="{{ path('app_service_manage') }}">
-                <div class="input-group">
-                    <input type="text" name="search" class="form-control" placeholder="Zoek klanten..." value="{{ app.request.query.get('search', '') }}">
-                    <button type="submit" class="btn btn-primary">Zoeken</button>
-                </div>
-            </form>
-        </div>
-
-        <div class="mb-3">
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-primary" data-filter="all">Alle</button>
-                <button type="button" class="btn btn-primary" data-filter="Abonnement">Abonnement</button>
-                <button type="button" class="btn btn-primary" data-filter="Contract">Contract</button>
-            </div>
-        </div>
-
         <div class="scrollable-table">
             <table class="table">
                 <thead>
@@ -36,9 +19,9 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% if klanten is not empty %}
-                    {% for klant in klanten %}
-                        <tr data-type="{{ klant.type }}">
+                {% if klant is not empty %}
+                    {% for klant in klant %}
+                        <tr>
                             <td>{{ klant.id }}</td>
                             <td>{{ klant.naam }}</td>
                             <td>{{ klant.email }}</td>
@@ -61,6 +44,7 @@
                         <td colspan="6">Geen klanten gevonden.</td>
                     </tr>
                 {% endif %}
+
                 </tbody>
             </table>
         </div>
@@ -68,7 +52,7 @@
         <a href="{{ path('klant_nieuw') }}" class="btn btn-primary">Nieuwe Klant Toevoegen</a>
     </div>
 
-    <script>
+<script>
         document.addEventListener('DOMContentLoaded', function() {
             const filterButtons = document.querySelectorAll('.btn-group button');
 

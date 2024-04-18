@@ -3,46 +3,51 @@
 
 namespace App\Controller;
 
-use App\Entity\Klant;
 use App\Form\KlantType;
 use App\Repository\KlantRepository;
-use Psr\Log\LoggerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
-
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Klant;
 
 class KlantController extends AbstractController
 {
-    #[Route('/klant_nieuw', name: 'klant_nieuw')]
-    public function nieuw(Request $request, EntityManagerInterface $entityManager, LoggerInterface $logger): Response
+    #[Route('/klant/manage', name: 'app_service_manage')]
+    public function manage(KlantRepository $klantRepository): Response
     {
-        $klant = new Klant(); // This should be an instance of the Klant entity
+        $klant = $klantRepository->findAll();
+
+        return $this->render('service_manage/index.html.twig', [
+            'klant' => $klant,
+        ]);
+    }
+
+    // Andere acties...
+
+
+    #[Route('/klant_nieuw', name: 'klant_nieuw')]
+    public function nieuw(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $klant = new Klant(); // Dit zou een instantie van de Klant entiteit moeten zijn
         $form = $this->createForm(KlantType::class, $klant);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
-            $logger->debug('Form is submitted.');
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($klant);
+            $entityManager->flush();
 
-            if ($form->isValid()) {
-                $logger->debug('Form is valid. Saving the klant.');
-                $entityManager->persist($klant);
-                $entityManager->flush();
-
-                $this->addFlash('success', 'Klant succesvol toegevoegd.');
-                return $this->redirectToRoute('app_service_manage');
-            } else {
-                $logger->debug('Form is not valid.');
-            }
+            $this->addFlash('success', 'Klant succesvol toegevoegd.');
+            return $this->redirectToRoute('app_service_manage');
         }
 
         return $this->render('klant/klant_nieuw.html.twig', [
             'form' => $form->createView(),
         ]);
     }
+
+
 
 
 

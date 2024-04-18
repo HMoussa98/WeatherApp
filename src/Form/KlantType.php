@@ -16,7 +16,10 @@ class KlantType extends AbstractType
 public function buildForm(FormBuilderInterface $builder, array $options)
 {
 $builder
-->add('klantId', TextType::class)
+    ->add('id', TextType::class, [
+        'label' => 'Klant ID', // Optioneel: een label toevoegen voor het veld
+        'attr' => ['class' => 'form-control'], // Optioneel: attributen toevoegen voor de HTML-weergave van het veld
+    ])
     ->add('naam',)
     ->add('email',)
     ->add('telefoonnummer')

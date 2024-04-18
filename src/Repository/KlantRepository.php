@@ -26,4 +26,12 @@ class KlantRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    // Voeg de findAll methode toe om alle klanten op te halen
+    public function findAll(): array
+    {
+        return $this->createQueryBuilder('k')
+            ->getQuery()
+            ->getResult();
+    }
 }

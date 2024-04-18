@@ -79,8 +79,11 @@ class __TwigTemplate_18c5c54c72ce78e15e5e179093af4384 extends Template
                             <ul class=\"navbar-nav me-auto mb-2 mb-lg-0\">
                                 ";
         // line 29
-        if ($this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) {
-            // line 30
+        if (((((twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 29, $this->source); })()), "request", [], "any", false, false, false, 29), "attributes", [], "any", false, false, false, 29), "get", ["_route"], "method", false, false, false, 29) == "app_admin_dash") || (twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source,         // line 30
+(isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 30, $this->source); })()), "request", [], "any", false, false, false, 30), "attributes", [], "any", false, false, false, 30), "get", ["_route"], "method", false, false, false, 30) == "user_edit")) || (twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source,         // line 31
+(isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 31, $this->source); })()), "request", [], "any", false, false, false, 31), "attributes", [], "any", false, false, false, 31), "get", ["_route"], "method", false, false, false, 31) == "user_delete")) || (twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source,         // line 32
+(isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 32, $this->source); })()), "request", [], "any", false, false, false, 32), "attributes", [], "any", false, false, false, 32), "get", ["_route"], "method", false, false, false, 32) == "register"))) {
+            // line 33
             echo "                                <li class=\"nav-item\">
                                     <a class=\"nav-link text-white\" aria-current=\"page\" href=\"/admin/dashboard\">Dashboard</a>
                                 </li>
@@ -89,67 +92,48 @@ class __TwigTemplate_18c5c54c72ce78e15e5e179093af4384 extends Template
                                 </li>
                                 ";
         }
-        // line 37
+        // line 40
         echo "                            </ul>
 
                             <ul class=\"d-flex\">
                                 ";
-        // line 40
-        if (twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 40, $this->source); })()), "user", [], "any", false, false, false, 40)) {
-            // line 41
+        // line 43
+        if (twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 43, $this->source); })()), "user", [], "any", false, false, false, 43)) {
+            // line 44
             echo "                                <li class=\"nav-item pt-2 px-3\">
                                     <span class=\"fw-bold text-white\">Ingelogd als: </span>
                                     <span class=\"text-white\">";
-            // line 43
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 43, $this->source); })()), "user", [], "any", false, false, false, 43), "email", [], "any", false, false, false, 43), "html", null, true);
+            // line 46
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 46, $this->source); })()), "user", [], "any", false, false, false, 46), "email", [], "any", false, false, false, 46), "html", null, true);
             echo "</span>
                                 </li>
                                 ";
         }
-        // line 46
+        // line 49
         echo "                                <li class=\"nav-item\">
                                     ";
-        // line 47
-        if (twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 47, $this->source); })()), "user", [], "any", false, false, false, 47)) {
-            // line 48
+        // line 50
+        if (twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 50, $this->source); })()), "user", [], "any", false, false, false, 50)) {
+            // line 51
             echo "                                    <a href=\"/logout\" class=\"btn btn-outline-light\">Uitloggen</a>
                                     ";
         } else {
-            // line 50
+            // line 53
             echo "                                    <a href=\"#\" class=\"btn btn-light\">Support</a>
                                     ";
         }
-        // line 52
+        // line 55
         echo "                                </li>
                             </ul>
                         </div>
-                        <div class=\"profile-dropdown\">
-                            <button class=\"profile-btn\">
-                                <span class=\"username\">";
-        // line 57
-        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 57, $this->source); })()), "user", [], "any", false, false, false, 57), "userIdentifier", [], "any", false, false, false, 57), "html", null, true);
-        echo "</span> <!-- Gebruikersnaam bovenaan -->
-                                <i class=\"material-icons\">account_circle</i> <!-- Profielsymbool -->
-                            </button>
-                            <div class=\"dropdown-content\">
-                                <a href=\"/weatherData\">Weergegevens</a> <!-- Link naar /weatherData -->
-                                <a href=\"/stationData\">Weerstations</a>
-                                <a href=\"#\">Meldingen</a>
-                                <a href=\"#\">Contact</a>
-                                <a href=\"";
-        // line 65
-        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_logout");
-        echo "\">Logout</a> <!-- Voeg logout-link toe -->
-                            </div>
-
-                        </div>
+                    </div>
                 </nav>
             </div>
         </header>
         ";
-        // line 72
+        // line 62
         $this->displayBlock('body', $context, $blocks);
-        // line 73
+        // line 63
         echo "        <footer>
             <p>&copy; Copyrights 2024</p>
         </footer>
@@ -252,7 +236,7 @@ class __TwigTemplate_18c5c54c72ce78e15e5e179093af4384 extends Template
 
     }
 
-    // line 72
+    // line 62
     public function block_body($context, array $blocks = [])
     {
         $macros = $this->macros;
@@ -291,7 +275,7 @@ class __TwigTemplate_18c5c54c72ce78e15e5e179093af4384 extends Template
      */
     public function getDebugInfo()
     {
-        return array (  256 => 72,  237 => 15,  227 => 16,  225 => 15,  220 => 14,  210 => 13,  197 => 10,  187 => 9,  168 => 5,  153 => 73,  151 => 72,  141 => 65,  130 => 57,  123 => 52,  119 => 50,  115 => 48,  113 => 47,  110 => 46,  104 => 43,  100 => 41,  98 => 40,  93 => 37,  84 => 30,  82 => 29,  68 => 17,  66 => 13,  63 => 12,  61 => 9,  54 => 5,  48 => 1,);
+        return array (  240 => 62,  221 => 15,  211 => 16,  209 => 15,  204 => 14,  194 => 13,  181 => 10,  171 => 9,  152 => 5,  137 => 63,  135 => 62,  126 => 55,  122 => 53,  118 => 51,  116 => 50,  113 => 49,  107 => 46,  103 => 44,  101 => 43,  96 => 40,  87 => 33,  85 => 32,  84 => 31,  83 => 30,  82 => 29,  68 => 17,  66 => 13,  63 => 12,  61 => 9,  54 => 5,  48 => 1,);
     }
 
     public function getSourceContext()
@@ -324,7 +308,10 @@ class __TwigTemplate_18c5c54c72ce78e15e5e179093af4384 extends Template
                         </button>
                         <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">
                             <ul class=\"navbar-nav me-auto mb-2 mb-lg-0\">
-                                {% if is_granted('ROLE_ADMIN') %}
+                                {% if app.request.attributes.get('_route') == 'app_admin_dash' or
+                                app.request.attributes.get('_route') == 'user_edit' or
+                                app.request.attributes.get('_route') == 'user_delete' or
+                                app.request.attributes.get('_route') == 'register' %}
                                 <li class=\"nav-item\">
                                     <a class=\"nav-link text-white\" aria-current=\"page\" href=\"/admin/dashboard\">Dashboard</a>
                                 </li>
@@ -350,20 +337,7 @@ class __TwigTemplate_18c5c54c72ce78e15e5e179093af4384 extends Template
                                 </li>
                             </ul>
                         </div>
-                        <div class=\"profile-dropdown\">
-                            <button class=\"profile-btn\">
-                                <span class=\"username\">{{ app.user.userIdentifier }}</span> <!-- Gebruikersnaam bovenaan -->
-                                <i class=\"material-icons\">account_circle</i> <!-- Profielsymbool -->
-                            </button>
-                            <div class=\"dropdown-content\">
-                                <a href=\"/weatherData\">Weergegevens</a> <!-- Link naar /weatherData -->
-                                <a href=\"/stationData\">Weerstations</a>
-                                <a href=\"#\">Meldingen</a>
-                                <a href=\"#\">Contact</a>
-                                <a href=\"{{ path('app_logout') }}\">Logout</a> <!-- Voeg logout-link toe -->
-                            </div>
-
-                        </div>
+                    </div>
                 </nav>
             </div>
         </header>

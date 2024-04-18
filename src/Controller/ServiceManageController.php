@@ -16,10 +16,10 @@ class ServiceManageController extends AbstractController
     public function index(): Response
     {
         // Haal hier de klanten op uit de database of een andere bron
-        $klanten = 'klanten'; // Vervang ... met je eigen logica om klanten op te halen
+        $klant = 'klant'; // Vervang ... met je eigen logica om klanten op te halen
 
         return $this->render('service_manage/index.html.twig', [
-            'klanten' => $klanten,
+            'klant' => $klant,
         ]);
     }
 }

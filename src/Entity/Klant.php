@@ -26,9 +26,6 @@ class Klant
     #[ORM\Column(type: "string")]
     private string $email;
 
-    #[ORM\Column(type: "string")]
-    private string $klantId;
-
     #[ORM\Column(type: "string", nullable: true)]
     private string $contractDetails;
 
@@ -48,16 +45,9 @@ class Klant
         return $this->id;
     }
 
-    public function getKlantId(): ?string
+    public function setId(int $id): void
     {
-        return $this->klantId;
-    }
-
-    public function setKlantId(string $klantId): self
-    {
-        $this->klantId = $klantId;
-
-        return $this;
+        $this->id = $id;
     }
 
     public function getTelefoonnummer(): ?string
