@@ -17,11 +17,12 @@ class UpdateUserFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $first_name = '{{ user.first_name }}';
         $builder
             ->add('first_name', null, [
                 'label' => false,
                 'mapped' => false,
-                'attr' => ['placeholder' => 'First name', 'class' => 'form-control', 'value' => '{{user.first_name}}']
+                'attr' => ['placeholder' => 'First name', 'class' => 'form-control']
             ])
             ->add('last_name', null, [
                 'label' => false,
@@ -31,7 +32,22 @@ class UpdateUserFormType extends AbstractType
             ->add('email', null, [
                 'label' => false,
                 'attr' => ['placeholder' => 'Email', 'class' => 'form-control']
-            ])  
+            ])
+            // ->add('plainPassword', PasswordType::class, [
+            //     'label' => false,
+            //     'mapped' => false,
+            //     'attr' => ['autocomplete' => 'new-password', 'class' => 'form-control', 'placeholder' => 'Wachtwoord'],
+            //     'constraints' => [
+            //         new NotBlank([
+            //             'message' => 'Please enter a password',
+            //         ]),
+            //         new Length([
+            //             'min' => 6,
+            //             'minMessage' => 'Your password should be at least {{ limit }} characters',
+            //             'max' => 4096,
+            //         ]),
+            //     ],
+            // ])
             ->add('roles', ChoiceType::class, [ 
                 'mapped' => false,
                 'label' => 'Rollen',

@@ -25,8 +25,8 @@
                         <td>{{ record.email }}</td>
                         <td>{{ record.roles|join(', ') }}</td>
                         <td>
-                            <a href="{{ path('user_edit', {'id': record.id}) }}" class="btn btn-primary">Wijzigen</a>
-                            <a href="#" class="btn btn-danger">Verwijderen</a>
+                            <a href="{{ path('user_edit', {'id': record.id}) }}" class="btn btn-primary">Bewerken</a>
+                            <a href="{{ path('user_delete', {'id': record.id}) }}" class="btn btn-danger">Verwijderen</a>
                         </td>
                     </tr>
                 {% endfor %}

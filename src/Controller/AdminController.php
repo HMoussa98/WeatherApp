@@ -36,18 +36,25 @@ class AdminController extends AbstractController
         $user = $entityManager->getRepository(Users::class)->find($id);
 
         if (!$user) {
-            throw $this->createNotFoundException(
-                'No user found for id '.$id
-            );
+            return $this->redirectToRoute('app_admin_dash');
         }
-
-        // $user->setName('New product name!');
-        // $entityManager->flush();
 
         $form = $this->createForm(UpdateUserFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
+            $roles = [];
+
+            foreach ($form->get('roles')->getData() as $role) {
+                $roles[] = $role;
+            }
+
+            $user->setFirst_name($form->get('first_name')->getData());
+            $user->setLast_name($form->get('last_name')->getData());
+            $user->setEmail($form->get('email')->getData());
+
+            $user->setRoles(array_unique($roles));
             $entityManager->flush();
 
             return $this->redirectToRoute('app_admin_dash');
@@ -57,5 +64,25 @@ class AdminController extends AbstractController
             'form' => $form,
             'user' => $user
         ]);
+    }
+
+    #[Route('/admin/dashboard/delete_user/{id}', name: 'user_delete')]
+    public function deleteUser(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, int $id): Response
+    {
+        $user = $entityManager->getRepository(Users::class)->find($id);
+
+        if (!$user) {
+            return $this->redirectToRoute('app_admin_dash');
+        }
+
+        $cuurent = $this->getUser();
+        $username = $cuurent->getEmail();
+
+        if ($username != $user->getEmail()) {
+            $entityManager->remove($user);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_admin_dash');
     }
 }

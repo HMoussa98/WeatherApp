@@ -26,7 +26,10 @@
                         </button>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                {% if is_granted('ROLE_ADMIN') %}
+                                {% if app.request.attributes.get('_route') == 'app_admin_dash' or
+                                app.request.attributes.get('_route') == 'user_edit' or
+                                app.request.attributes.get('_route') == 'user_delete' or
+                                app.request.attributes.get('_route') == 'register' %}
                                 <li class="nav-item">
                                     <a class="nav-link text-white" aria-current="page" href="/admin/dashboard">Dashboard</a>
                                 </li>

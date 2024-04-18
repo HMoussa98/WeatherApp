@@ -38,11 +38,13 @@ main .register-form .roles .required {
   display: inline; 
 }
 
-main .register-form #registration_form_roles {
+main .register-form #registration_form_roles, 
+main .register-form #update_user_form_roles {
   display: block; 
 }
 
-main .register-form #registration_form_roles input[type="checkbox"] {
+main .register-form #registration_form_roles input[type="checkbox"],
+main .register-form #update_user_form_roles input[type="checkbox"] {
   border-radius: .25em;
   float: left;
   margin-left: 5.5em;
@@ -52,7 +54,8 @@ main .register-form #registration_form_roles input[type="checkbox"] {
   margin-top: .25em;
 }
 
-main .register-form #registration_form_roles label {
+main .register-form #registration_form_roles label,
+main .register-form #update_user_form_roles label {
   display: block; 
 }
 
