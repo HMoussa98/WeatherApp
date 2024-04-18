@@ -84,6 +84,41 @@
 
         </div>
         </div>
+
+        <div class="content">
+            <section class="main-header grid">
+                <h1 class="h1tag">NearestLocation Data van Station: {{ nearestLocation.stationName }}</h1>
+                <!-- Add any additional buttons if needed -->
+            </section>
+
+            <div class="card">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>StationName</th>
+                        <th>Name</th>
+                        <th>AdministrativeRegion1</th>
+                        <th>AdministrativeRegion2</th>
+                        <th>CountryCode</th>
+                        <th>Longitude</th>
+                        <th>Latitude</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{ nearestLocation.id }}</td>
+                        <td>{{ nearestLocation.stationName | default('NONE') }}</td>
+                        <td>{{ nearestLocation.name | default('NONE') }}</td>
+                        <td>{{ nearestLocation.administrativeRegion1 | default('NONE') }}</td>
+                        <td>{{ nearestLocation.administrativeRegion2 | default('NONE') }}</td>
+                        <td>{{ nearestLocation.countryCode | default('NONE') }}</td>
+                        <td>{{ nearestLocation.longitude | default('NONE') }}</td>
+                        <td>{{ nearestLocation.latitude | default('NONE') }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
     </main>
 
 {% block javascripts %}
