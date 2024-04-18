@@ -239,12 +239,14 @@ class DataAcqController extends AbstractController
     }
 
     #[Route('geolocation/{station}', name: 'geolocation')]
-    public function geolocation($station, GeoLocationRepository $geoLocationRepository): Response
+    public function geolocation($station, GeoLocationRepository $geoLocationRepository, NearstLocationRepository $nearestLocationRepository): Response
     {
         $geoLocation = $geoLocationRepository->findOneBy(['stationName' => $station]);
+        $nearestLocation = $nearestLocationRepository->findOneBy(['stationName' => $station]);
 
         return $this->render('data_acq/geoLocation.html.twig', [
             'geoLocation' => $geoLocation,
+            'nearestLocation' => $nearestLocation,
         ]);
     }
 
