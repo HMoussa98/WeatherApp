@@ -184,6 +184,10 @@
             color: #ecf0f1;
         }
     </style>
+    {% block stylesheets %}
+        {{ parent() }}
+        <link rel="stylesheet" href="{{ asset('DataAquisition/styles.css') }}">
+    {% endblock %}
 
     <main>
 
@@ -242,7 +246,7 @@
                            <div class="card__button_contetnet">
                                <div class="card__buttons">
                                    <a href="{{ path('geolocation', {'station': weatherStation.getName()}) }}" class="button">Geolocatie</a>
-                                   <a href="{{ path('nearestlocation', {'station': weatherStation.getName()}) }}" class="button">NearestLocation</a>
+
 
 
                                </div>

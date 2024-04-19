@@ -90,7 +90,7 @@ class WeatherDataController extends AbstractController
                         return $weatherData->getSTN();
                     }, $lastThirtyWeatherData);
                     $this->postRequestCounter++;
-                    if ($this->postRequestCounter >= 30) {
+                    if ($this->postRequestCounter >= 5) {
                         // Reset the counter
                         $this->postRequestCounter = 0;
                     // Send notification with station IDs

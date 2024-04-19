@@ -76,3 +76,21 @@ nearestlocation:
 app_meldingen:  # New route for notifications
     path: /meldingen
     controller: App\Controller\MeldingenController::index
+
+
+klant_nieuw:
+    path: /klant_nieuw
+    controller: App\Controller\KlantController::nieuw
+
+klant_verwijderen:
+    path: /klant_verwijderen
+    controller: App\Controller\KlantController::verwijderen
+
+contract_index:
+    path: /contract_index
+    controller: App\Controller\ContractController::index
+    methods: GET
+
+abbo_bewerken:
+    path: /abbo_bewerken
+    controller: App\Controller\AbboController::bewerken
