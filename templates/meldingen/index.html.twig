@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Notifications{% endblock %}
+
+{% block body %}
+
+    {% block stylesheets %}
+        {{ parent() }}
+        <link rel="stylesheet" href="{{ asset('DataAquisition/styles.css') }}">
+        <link rel="stylesheet" href="{{ asset('DataAquisition/index.css') }}">
+    {% endblock %}
+    <main>
+        <div class="content">
+            <section class="main-header grid">
+                <h1 class="h1tag">Meldingen</h1>
+            </section>
+
+            <div class="card">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Station ID</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Error Name</th>
+                        <th>Description</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for notification in meldingen %}
+                        <tr>
+                            <td>{{ notification.id }}</td>
+                            <td>
+                                {% for stnId in notification.STNID %}
+                                    {{ stnId }}
+                                    {% if not loop.last %}, {% endif %}
+                                {% endfor %}
+                            </td>
+                            <td>{{ notification.date|date('Y-m-d') }}</td>
+                            <td>{{ notification.time|date('H:i:s') }}</td>
+                            <td>{{ notification.errorName }}</td>
+                            <td>{{ notification.description }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+{% endblock %}

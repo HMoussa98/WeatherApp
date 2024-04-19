@@ -39,6 +39,7 @@ security:
 
     # DATA_ACQUISITION
         - { path: ^/data_acq, roles: [ROLE_DATA_ACQUISITION] }
+
         - { path: ^/weer-stations, roles: [ROLE_DATA_ACQUISITION] }
         - { path: ^/geolocation, roles: [ROLE_DATA_ACQUISITION] }
         - { path: ^/nearestlocation, roles: [ROLE_DATA_ACQUISITION] }

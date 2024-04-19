@@ -61,3 +61,6 @@ nearestlocation:
     path: '/nearestlocation/{station}'
     controller: 'App\Controller\DataAcqController::nearestlocation'
 
+app_meldingen:  # New route for notifications
+    path: /meldingen
+    controller: App\Controller\MeldingenController::index

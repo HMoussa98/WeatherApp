@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Notification;
 use App\Entity\Weatherdata;
 use Doctrine\Persistence\ManagerRegistry;
 use Psr\Log\LoggerInterface;
@@ -14,6 +15,7 @@ class WeatherDataController extends AbstractController
 {
     private ManagerRegistry $doctrine;
     private LoggerInterface $logger;
+    private int $postRequestCounter = 0;
 
     public function __construct(ManagerRegistry $doctrine, LoggerInterface $logger)
     {
@@ -39,17 +41,64 @@ class WeatherDataController extends AbstractController
 
             // Iterate over each weather record in the data and save it to the database
             foreach ($weatherDataArray['WEATHERDATA'] as $weatherRecordArray) {
-                // Validate and process each weather record
-                $weatherRecord = $this->processWeatherRecord($weatherRecordArray);
+                $weatherRecord = new Weatherdata();
 
-                // If a valid record is returned, persist it
-                if ($weatherRecord instanceof Weatherdata) {
-                    $entityManager->persist($weatherRecord);
+                // Set properties of the Weatherdata entity
+                $weatherRecord->setSTN($weatherRecordArray['STN']);
+                $weatherRecord->setDATE(new \DateTime($weatherRecordArray['DATE']));
+                $weatherRecord->setTIME(new \DateTime($weatherRecordArray['TIME']));
+
+                // Check for missing values
+                $missingValues = $this->checkMissingValues($weatherRecordArray);
+                if (!empty($missingValues)) {
+                    // Create a notification for missing values
+                    $this->createMissingValuesNotification($weatherRecord, $missingValues);
                 }
+
+                // Handle missing values and unreal temperature readings
+                $temp = $weatherRecordArray['TEMP'];
+                $weatherRecord->setTEMP($temp);
+
+                // Set other properties
+                $weatherRecord->setDEWP($weatherRecordArray['DEWP']);
+                $weatherRecord->setSTP($weatherRecordArray['STP']);
+                $weatherRecord->setSLP($weatherRecordArray['SLP']);
+                $weatherRecord->setVISIB($weatherRecordArray['VISIB']);
+                $weatherRecord->setWDSP($weatherRecordArray['WDSP']);
+                $weatherRecord->setPRCP($weatherRecordArray['PRCP']);
+                $weatherRecord->setSNDP($weatherRecordArray['SNDP']);
+                $weatherRecord->setFRSHTT($weatherRecordArray['FRSHTT']);
+                $weatherRecord->setCLDC($weatherRecordArray['CLDC']);
+                $weatherRecord->setWNDDIR($weatherRecordArray['WNDDIR']);
+
+                // Persist the entity
+                $entityManager->persist($weatherRecord);
             }
 
             // Flush changes to the database
             $entityManager->flush();
+
+            // Send notification for unreal temperature readings
+            foreach ($weatherDataArray['WEATHERDATA'] as $weatherRecordArray) {
+                $temp = $weatherRecordArray['TEMP'];
+                if ($temp !== null && $this->isTemperatureUnreal($weatherRecordArray['STN'], $temp)) {
+                    // Get the last thirty weather records for the station
+                    $lastThirtyWeatherData = $this->getLastThirtyTemperatures($weatherRecordArray['STN']);
+
+                    // Extract station IDs from the last thirty records
+                    $stationIds = array_map(function($weatherData) {
+                        return $weatherData->getSTN();
+                    }, $lastThirtyWeatherData);
+                    $this->postRequestCounter++;
+                    if ($this->postRequestCounter >= 30) {
+                        // Reset the counter
+                        $this->postRequestCounter = 0;
+                    // Send notification with station IDs
+                        $this->sendNotification($stationIds);
+                }
+                }
+            }
+
 
             return new Response('Weather data successfully received and saved to the database', Response::HTTP_OK);
         } catch (\Exception $e) {
@@ -61,89 +110,120 @@ class WeatherDataController extends AbstractController
         }
     }
 
-    // Function to validate and process each weather record
-    private function processWeatherRecord(array $weatherRecordArray): ?Weatherdata
+    private function checkMissingValues(array $weatherRecordArray): array
     {
-        // Validate if all required fields are present
-        $requiredFields = ['STN', 'DATE', 'TIME', 'TEMP', 'DEWP', 'STP', 'SLP', 'VISIB', 'WDSP', 'PRCP', 'SNDP', 'FRSHTT', 'CLDC', 'WNDDIR'];
-        foreach ($requiredFields as $field) {
-            if (!isset($weatherRecordArray[$field])) {
-                return null; // Missing required field, skip this record
+        $missingValues = [];
+        foreach ($weatherRecordArray as $key => $value) {
+            if ($value === null || $value === '') {
+                $missingValues[] = $key;
             }
         }
-
-        // Check if temperature reading is unreal
-        if (isset($weatherRecordArray['TEMP'])) {
-            $expectedTemperature = $this->calculateExpectedTemperature($weatherRecordArray);
-            $temperature = $weatherRecordArray['TEMP'];
-            if ($this->isUnrealTemperature($temperature, $expectedTemperature)) {
-                // Adjust temperature
-                $weatherRecordArray['TEMP'] = $expectedTemperature;
-                $this->logTemperatureMalfunction($weatherRecordArray['STN'], $temperature, $expectedTemperature);
-            }
-        }
-
-        // Create Weatherdata entity
-        $weatherRecord = new Weatherdata();
-        $weatherRecord->setSTN($weatherRecordArray['STN']);
-        $weatherRecord->setDATE(new \DateTime($weatherRecordArray['DATE']));
-        $weatherRecord->setTIME(new \DateTime($weatherRecordArray['TIME']));
-        $weatherRecord->setTEMP($weatherRecordArray['TEMP']);
-        $weatherRecord->setDEWP($weatherRecordArray['DEWP']);
-        $weatherRecord->setSTP($weatherRecordArray['STP']);
-        $weatherRecord->setSLP($weatherRecordArray['SLP']);
-        $weatherRecord->setVISIB($weatherRecordArray['VISIB']);
-        $weatherRecord->setWDSP($weatherRecordArray['WDSP']);
-        $weatherRecord->setPRCP($weatherRecordArray['PRCP']);
-        $weatherRecord->setSNDP(floatval($weatherRecordArray['SNDP']));
-        $weatherRecord->setFRSHTT($weatherRecordArray['FRSHTT']);
-        $weatherRecord->setCLDC($weatherRecordArray['CLDC']);
-        $weatherRecord->setWNDDIR($weatherRecordArray['WNDDIR']);
-
-        return $weatherRecord;
+        return $missingValues;
     }
 
-    // Function to calculate the expected temperature based on previous measurements
-    private function calculateExpectedTemperature(array $weatherRecordArray): float
+    private function createMissingValuesNotification(Weatherdata $weatherData, array $missingValues)
     {
-        // Implement your logic to calculate the expected temperature
-        // For example, you could average the previous 30 temperature measurements
-        // and return that value.
+        try {
+            // Create a new Notification entity object
+            $notification = new Notification();
 
-        // Sample implementation:
-        $previousTemperatures = []; // Assuming you have an array of previous temperature measurements
-        if (count($previousTemperatures) === 0) {
-            return 0.0; // Return a default value if there are no previous measurements
-        }
+            // Set properties of the Notification entity
+            $notification->setSTNID($weatherData->getSTN());
+            $notification->setWEERID($weatherData->getId());
+            $notification->setDate(new \DateTime());
+            $notification->setTime(new \DateTime());
 
-        $averageTemperature = array_sum($previousTemperatures) / count($previousTemperatures);
-        return $averageTemperature;
-    }
+            // Set the error name and description
+            $notification->setErrorName('Missing Values');
+            $notification->setDescription('Missing values detected at station: ' . $weatherData->getSTN());
 
-    // Function to check if a temperature reading is unreal
-    private function isUnrealTemperature(float $temperature, float $expectedTemperature): bool
-    {
-        // Implement your logic to determine if the temperature reading is unreal
-        // For example, you could compare the temperature reading with the expected temperature
-        // and return true if it's considered unreal, and false otherwise.
+            // Append details of missing values to the description
+            $notification->setDescription($notification->getDescription() . ' Missing values: ' . implode(', ', $missingValues));
 
-        // Sample implementation:
-        $thresholdPercentage = 20; // Define the threshold percentage
-        $threshold = $expectedTemperature * ($thresholdPercentage / 100); // Calculate the threshold value
+            // Get the entity manager
+            $entityManager = $this->doctrine->getManager();
 
-        // Check if the temperature reading is 20% greater or less than the expected temperature
-        if ($temperature > ($expectedTemperature + $threshold) || $temperature < ($expectedTemperature - $threshold)) {
-            return true; // Return true if the temperature reading is unreal
-        } else {
-            return false; // Return false otherwise
+            // Persist the entity
+            $entityManager->persist($notification);
+        } catch (\Exception $e) {
+            // Log any errors
+            $this->logger->error('Error occurred while creating missing values notification: ' . $e->getMessage());
         }
     }
 
-    // Function to log temperature malfunction
-    private function logTemperatureMalfunction(string $station, float $originalTemperature, float $adjustedTemperature): void
+    private function getLastThirtyTemperatures(string $station): array
     {
-        // Implement your logic to log temperature malfunction
-        // You can use the logger service to log the details
-        $this->logger->info('Temperature malfunction detected at station ' . $station . ': Original temperature = ' . $originalTemperature . ', Adjusted temperature = ' . $adjustedTemperature);
+        // Get the entity manager
+        $entityManager = $this->doctrine->getManager();
+
+        // Get the Weatherdata repository
+        $weatherDataRepository = $entityManager->getRepository(Weatherdata::class);
+
+        // Query to retrieve the last 30 temperature measurements for the station
+        $queryBuilder = $weatherDataRepository->createQueryBuilder('w');
+        $queryBuilder->select('w')
+            ->where('w.STN = :station')
+            ->orderBy('w.DATE', 'DESC')
+            ->setMaxResults(30)
+            ->setParameter('station', $station);
+
+        // Execute the query and fetch the results
+        return $queryBuilder->getQuery()->getResult();
     }
+
+    // Function to check if temperature reading is unreal
+    private function isTemperatureUnreal(string $station, float $temperature): bool
+    {
+        // Get the last 30 temperature measurements for the station from the database
+        $lastThirtyWeatherData = $this->getLastThirtyTemperatures($station);
+
+        // Check if there are measurements available
+        if (empty($lastThirtyWeatherData)) {
+            // If no measurements available, return false or handle accordingly
+            return false;
+        }
+
+        // Calculate the average temperature from the last 30 measurements
+        $averageTemperature = 0;
+        foreach ($lastThirtyWeatherData as $weatherData) {
+            $averageTemperature += $weatherData->getTEMP();
+        }
+        $averageTemperature /= count($lastThirtyWeatherData);
+
+        // Calculate the expected temperature based on extrapolation ± 20%
+        $expectedTemperature = $averageTemperature * 1.2;
+
+        // Check if the current temperature is 20% or more greater or less than expected
+        return $temperature >= $expectedTemperature * 1.2 || $temperature <= $expectedTemperature * 0.8;
+    }
+
+    // Function to send notification for unreal temperature readings
+    private function sendNotification(array $stations)
+    {
+        try {
+            // Create a new Notification entity object
+            $notification = new Notification();
+
+            // Set properties of the Notification entity
+            $notification->setSTNID($stations); // Set all stations tested for unreal temperature
+            $notification->setWEERID([]);
+            $notification->setDate(new \DateTime());
+            $notification->setTime(new \DateTime());
+
+            // Set the error name and description
+            $notification->setErrorName('Unreal temperature reading');
+            $notification->setDescription('Unreal temperature reading detected at stations');
+
+            // Get the entity manager
+            $entityManager = $this->doctrine->getManager();
+
+            // Persist the entity
+            $entityManager->persist($notification);
+            $entityManager->flush();
+        } catch (\Exception $e) {
+            // Log any errors
+            $this->logger->error('Error occurred while sending notification: ' . $e->getMessage());
+        }
+    }
+
 }
