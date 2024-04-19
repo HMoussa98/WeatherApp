@@ -96,121 +96,98 @@ class __TwigTemplate_6cadd3c4b18fd1131436bb26e678173c extends Template
                     <th>Naam</th>
                     <th>Email</th>
                     <th>Telefoonnummer</th>
+                    <th>Contract Details</th>
                     <th>Type</th>
+                    <th>Startdatum</th>
+                    <th>Einddatum</th>
+                    <th>Status</th>
                     <th>Acties</th>
                 </tr>
                 </thead>
                 <tbody>
                 ";
-        // line 22
-        if ( !twig_test_empty((isset($context["klant"]) || array_key_exists("klant", $context) ? $context["klant"] : (function () { throw new RuntimeError('Variable "klant" does not exist.', 22, $this->source); })()))) {
-            // line 23
+        // line 26
+        if ( !twig_test_empty((isset($context["klant"]) || array_key_exists("klant", $context) ? $context["klant"] : (function () { throw new RuntimeError('Variable "klant" does not exist.', 26, $this->source); })()))) {
+            // line 27
             echo "                    ";
             $context['_parent'] = $context;
             $context['_seq'] = twig_ensure_traversable($context["klant"]);
             foreach ($context['_seq'] as $context["_key"] => $context["klant"]) {
-                // line 24
+                // line 28
                 echo "                        <tr>
                             <td>";
-                // line 25
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["klant"], "id", [], "any", false, false, false, 25), "html", null, true);
-                echo "</td>
-                            <td>";
-                // line 26
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["klant"], "naam", [], "any", false, false, false, 26), "html", null, true);
-                echo "</td>
-                            <td>";
-                // line 27
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["klant"], "email", [], "any", false, false, false, 27), "html", null, true);
-                echo "</td>
-                            <td>";
-                // line 28
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["klant"], "telefoonnummer", [], "any", false, false, false, 28), "html", null, true);
-                echo "</td>
-                            <td>";
                 // line 29
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["klant"], "type", [], "any", false, false, false, 29), "html", null, true);
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["klant"], "id", [], "any", false, false, false, 29), "html", null, true);
+                echo "</td>
+                            <td>";
+                // line 30
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["klant"], "naam", [], "any", false, false, false, 30), "html", null, true);
+                echo "</td>
+                            <td>";
+                // line 31
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["klant"], "email", [], "any", false, false, false, 31), "html", null, true);
+                echo "</td>
+                            <td>";
+                // line 32
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["klant"], "telefoonnummer", [], "any", false, false, false, 32), "html", null, true);
+                echo "</td>
+                            <td>";
+                // line 33
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["klant"], "contractDetails", [], "any", false, false, false, 33), "html", null, true);
+                echo "</td>
+                            <td>";
+                // line 34
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["klant"], "type", [], "any", false, false, false, 34), "html", null, true);
+                echo "</td>
+                            <td>";
+                // line 35
+                echo twig_escape_filter($this->env, twig_date_format_filter($this->env, twig_get_attribute($this->env, $this->source, $context["klant"], "startdatum", [], "any", false, false, false, 35), "Y-m-d"), "html", null, true);
+                echo "</td>
+                            <td>";
+                // line 36
+                echo twig_escape_filter($this->env, twig_date_format_filter($this->env, twig_get_attribute($this->env, $this->source, $context["klant"], "einddatum", [], "any", false, false, false, 36), "Y-m-d"), "html", null, true);
+                echo "</td>
+                            <td>";
+                // line 37
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["klant"], "status", [], "any", false, false, false, 37), "html", null, true);
                 echo "</td>
                             <td>
+                                <!-- Acties zoals eerder gedefinieerd -->
                                 <a href=\"";
-                // line 31
-                echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("klant_verwijderen", ["id" => twig_get_attribute($this->env, $this->source, $context["klant"], "id", [], "any", false, false, false, 31)]), "html", null, true);
+                // line 40
+                echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("klant_verwijderen", ["id" => twig_get_attribute($this->env, $this->source, $context["klant"], "id", [], "any", false, false, false, 40)]), "html", null, true);
                 echo "\" class=\"btn btn-danger\" onclick=\"return confirm('Weet je zeker dat je deze klant wilt verwijderen?');\">Verwijderen</a>
-                                ";
-                // line 32
-                if ((twig_get_attribute($this->env, $this->source, $context["klant"], "type", [], "any", false, false, false, 32) == "Contract")) {
-                    // line 33
-                    echo "                                    <a href=\"";
-                    echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("contract_index", ["id" => twig_get_attribute($this->env, $this->source, $context["klant"], "id", [], "any", false, false, false, 33)]), "html", null, true);
-                    echo "\" class=\"btn btn-primary\">Details</a>
-                                ";
-                } elseif ((twig_get_attribute($this->env, $this->source,                 // line 34
-$context["klant"], "type", [], "any", false, false, false, 34) == "Abonnement")) {
-                    // line 35
-                    echo "                                    <a href=\"";
-                    echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("abbo_bewerken", ["id" => twig_get_attribute($this->env, $this->source, $context["klant"], "id", [], "any", false, false, false, 35)]), "html", null, true);
-                    echo "\" class=\"btn btn-primary\">Bewerken</a>
-                                ";
-                } else {
-                    // line 37
-                    echo "                                    <a href=\"#\" class=\"btn btn-primary\">Details</a>
-                                ";
-                }
-                // line 39
-                echo "                            </td>
+                                <a href=\"#\" class=\"btn btn-primary\">Details</a>
+                            </td>
                         </tr>
                     ";
             }
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['klant'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 42
+            // line 45
             echo "                ";
         } else {
-            // line 43
+            // line 46
             echo "                    <tr>
-                        <td colspan=\"6\">Geen klanten gevonden.</td>
+                        <td colspan=\"10\">Geen klanten gevonden.</td>
                     </tr>
                 ";
         }
-        // line 47
-        echo "
-                </tbody>
+        // line 50
+        echo "                </tbody>
             </table>
         </div>
 
         <a href=\"";
-        // line 52
+        // line 54
         echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("klant_nieuw");
         echo "\" class=\"btn btn-primary\">Nieuwe Klant Toevoegen</a>
+        <a href=\"";
+        // line 55
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("contract_index");
+        echo "\" class=\"btn btn-primary\">Contract Index</a>
     </div>
-
-<script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const filterButtons = document.querySelectorAll('.btn-group button');
-
-            filterButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const filterValue = this.dataset.filter;
-                    const rows = document.querySelectorAll('tbody tr');
-
-                    rows.forEach(row => {
-                        if (filterValue === 'all') {
-                            row.style.display = 'table-row';
-                        } else {
-                            const type = row.dataset.type;
-
-                            if (type === filterValue) {
-                                row.style.display = 'table-row';
-                            } else {
-                                row.style.display = 'none';
-                            }
-                        }
-                    });
-                });
-            });
-        });
-    </script>
 ";
         
         $__internal_6f47bbe9983af81f1e7450e9a3e3768f->leave($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof);
@@ -241,7 +218,7 @@ $context["klant"], "type", [], "any", false, false, false, 34) == "Abonnement"))
      */
     public function getDebugInfo()
     {
-        return array (  184 => 52,  177 => 47,  171 => 43,  168 => 42,  160 => 39,  156 => 37,  150 => 35,  148 => 34,  143 => 33,  141 => 32,  137 => 31,  132 => 29,  128 => 28,  124 => 27,  120 => 26,  116 => 25,  113 => 24,  108 => 23,  106 => 22,  88 => 6,  78 => 5,  59 => 3,  36 => 1,);
+        return array (  188 => 55,  184 => 54,  178 => 50,  172 => 46,  169 => 45,  158 => 40,  152 => 37,  148 => 36,  144 => 35,  140 => 34,  136 => 33,  132 => 32,  128 => 31,  124 => 30,  120 => 29,  117 => 28,  112 => 27,  110 => 26,  88 => 6,  78 => 5,  59 => 3,  36 => 1,);
     }
 
     public function getSourceContext()
@@ -262,7 +239,11 @@ $context["klant"], "type", [], "any", false, false, false, 34) == "Abonnement"))
                     <th>Naam</th>
                     <th>Email</th>
                     <th>Telefoonnummer</th>
+                    <th>Contract Details</th>
                     <th>Type</th>
+                    <th>Startdatum</th>
+                    <th>Einddatum</th>
+                    <th>Status</th>
                     <th>Acties</th>
                 </tr>
                 </thead>
@@ -274,59 +255,30 @@ $context["klant"], "type", [], "any", false, false, false, 34) == "Abonnement"))
                             <td>{{ klant.naam }}</td>
                             <td>{{ klant.email }}</td>
                             <td>{{ klant.telefoonnummer }}</td>
+                            <td>{{ klant.contractDetails }}</td>
                             <td>{{ klant.type }}</td>
+                            <td>{{ klant.startdatum|date('Y-m-d') }}</td>
+                            <td>{{ klant.einddatum|date('Y-m-d') }}</td>
+                            <td>{{ klant.status }}</td>
                             <td>
+                                <!-- Acties zoals eerder gedefinieerd -->
                                 <a href=\"{{ path('klant_verwijderen', { 'id': klant.id }) }}\" class=\"btn btn-danger\" onclick=\"return confirm('Weet je zeker dat je deze klant wilt verwijderen?');\">Verwijderen</a>
-                                {% if klant.type == 'Contract' %}
-                                    <a href=\"{{ path('contract_index', { 'id': klant.id }) }}\" class=\"btn btn-primary\">Details</a>
-                                {% elseif klant.type == 'Abonnement' %}
-                                    <a href=\"{{ path('abbo_bewerken', { 'id': klant.id }) }}\" class=\"btn btn-primary\">Bewerken</a>
-                                {% else %}
-                                    <a href=\"#\" class=\"btn btn-primary\">Details</a>
-                                {% endif %}
+                                <a href=\"#\" class=\"btn btn-primary\">Details</a>
                             </td>
                         </tr>
                     {% endfor %}
                 {% else %}
                     <tr>
-                        <td colspan=\"6\">Geen klanten gevonden.</td>
+                        <td colspan=\"10\">Geen klanten gevonden.</td>
                     </tr>
                 {% endif %}
-
                 </tbody>
             </table>
         </div>
 
         <a href=\"{{ path('klant_nieuw') }}\" class=\"btn btn-primary\">Nieuwe Klant Toevoegen</a>
+        <a href=\"{{ path('contract_index') }}\" class=\"btn btn-primary\">Contract Index</a>
     </div>
-
-<script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const filterButtons = document.querySelectorAll('.btn-group button');
-
-            filterButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const filterValue = this.dataset.filter;
-                    const rows = document.querySelectorAll('tbody tr');
-
-                    rows.forEach(row => {
-                        if (filterValue === 'all') {
-                            row.style.display = 'table-row';
-                        } else {
-                            const type = row.dataset.type;
-
-                            if (type === filterValue) {
-                                row.style.display = 'table-row';
-                            } else {
-                                row.style.display = 'none';
-                            }
-                        }
-                    });
-                });
-            });
-        });
-    </script>
-{% endblock %}
-", "service_manage/index.html.twig", "C:\\Users\\noah-\\zand1\\WeatherApp\\templates\\service_manage\\index.html.twig");
+{% endblock %}", "service_manage/index.html.twig", "C:\\Users\\noah-\\zand1\\WeatherApp\\templates\\service_manage\\index.html.twig");
     }
 }

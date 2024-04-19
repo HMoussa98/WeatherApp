@@ -14,7 +14,11 @@
                     <th>Naam</th>
                     <th>Email</th>
                     <th>Telefoonnummer</th>
+                    <th>Contract Details</th>
                     <th>Type</th>
+                    <th>Startdatum</th>
+                    <th>Einddatum</th>
+                    <th>Status</th>
                     <th>Acties</th>
                 </tr>
                 </thead>
@@ -26,56 +30,28 @@
                             <td>{{ klant.naam }}</td>
                             <td>{{ klant.email }}</td>
                             <td>{{ klant.telefoonnummer }}</td>
+                            <td>{{ klant.contractDetails }}</td>
                             <td>{{ klant.type }}</td>
+                            <td>{{ klant.startdatum|date('Y-m-d') }}</td>
+                            <td>{{ klant.einddatum|date('Y-m-d') }}</td>
+                            <td>{{ klant.status }}</td>
                             <td>
+                                <!-- Acties zoals eerder gedefinieerd -->
                                 <a href="{{ path('klant_verwijderen', { 'id': klant.id }) }}" class="btn btn-danger" onclick="return confirm('Weet je zeker dat je deze klant wilt verwijderen?');">Verwijderen</a>
-                                {% if klant.type == 'Contract' %}
-                                    <a href="{{ path('contract_index', { 'id': klant.id }) }}" class="btn btn-primary">Details</a>
-                                {% elseif klant.type == 'Abonnement' %}
-                                    <a href="{{ path('abbo_bewerken', { 'id': klant.id }) }}" class="btn btn-primary">Bewerken</a>
-                                {% else %}
-                                    <a href="#" class="btn btn-primary">Details</a>
-                                {% endif %}
+                                <a href="#" class="btn btn-primary">Details</a>
                             </td>
                         </tr>
                     {% endfor %}
                 {% else %}
                     <tr>
-                        <td colspan="6">Geen klanten gevonden.</td>
+                        <td colspan="10">Geen klanten gevonden.</td>
                     </tr>
                 {% endif %}
-
                 </tbody>
             </table>
         </div>
 
         <a href="{{ path('klant_nieuw') }}" class="btn btn-primary">Nieuwe Klant Toevoegen</a>
+        <a href="{{ path('contract_index') }}" class="btn btn-primary">Contract Index</a>
     </div>
-
-<script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const filterButtons = document.querySelectorAll('.btn-group button');
-
-            filterButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const filterValue = this.dataset.filter;
-                    const rows = document.querySelectorAll('tbody tr');
-
-                    rows.forEach(row => {
-                        if (filterValue === 'all') {
-                            row.style.display = 'table-row';
-                        } else {
-                            const type = row.dataset.type;
-
-                            if (type === filterValue) {
-                                row.style.display = 'table-row';
-                            } else {
-                                row.style.display = 'none';
-                            }
-                        }
-                    });
-                });
-            });
-        });
-    </script>
 {% endblock %}

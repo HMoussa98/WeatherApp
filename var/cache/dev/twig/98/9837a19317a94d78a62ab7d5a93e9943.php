@@ -98,7 +98,7 @@ class __TwigTemplate_ed45669d612098846c4d6813c2116d5f extends Template
 
             ";
         // line 14
-        echo         $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->renderBlock((isset($context["form"]) || array_key_exists("form", $context) ? $context["form"] : (function () { throw new RuntimeError('Variable "form" does not exist.', 14, $this->source); })()), 'form_start');
+        echo         $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->renderBlock((isset($context["form"]) || array_key_exists("form", $context) ? $context["form"] : (function () { throw new RuntimeError('Variable "form" does not exist.', 14, $this->source); })()), 'form_start', ["attr" => ["class" => "col-10"]]);
         echo "
             <div class=\"row\">
                 <div class=\"col-6\">
@@ -126,14 +126,14 @@ class __TwigTemplate_ed45669d612098846c4d6813c2116d5f extends Template
                     </div>
                 </div>
             </div>
-            <div class=\"roles\">
+            <div class=\"roles mb-3\">
                 <span class=\"material-icons\">assignment_ind</span>
                 ";
         // line 34
         echo $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->searchAndRenderBlock(twig_get_attribute($this->env, $this->source, (isset($context["form"]) || array_key_exists("form", $context) ? $context["form"] : (function () { throw new RuntimeError('Variable "form" does not exist.', 34, $this->source); })()), "roles", [], "any", false, false, false, 34), 'row');
         echo "
             </div>
-            <div><button type=\"submit\" class=\"btn btn-success\">Registreren</button></div>
+            <div><button type=\"submit\" class=\"btn btn-success\">Opslaan</button></div>
             ";
         // line 37
         echo         $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->renderBlock((isset($context["form"]) || array_key_exists("form", $context) ? $context["form"] : (function () { throw new RuntimeError('Variable "form" does not exist.', 37, $this->source); })()), 'form_end');
@@ -141,6 +141,19 @@ class __TwigTemplate_ed45669d612098846c4d6813c2116d5f extends Template
         </div>
     </div>
 </main>
+
+<script type=\"text/javascript\">
+    var first_name = document.getElementById('update_user_form_first_name');
+    var last_name = document.getElementById('update_user_form_last_name');
+    first_name.value = '";
+        // line 45
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (isset($context["user"]) || array_key_exists("user", $context) ? $context["user"] : (function () { throw new RuntimeError('Variable "user" does not exist.', 45, $this->source); })()), "first_name", [], "any", false, false, false, 45), "html", null, true);
+        echo "';
+    last_name.value = '";
+        // line 46
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (isset($context["user"]) || array_key_exists("user", $context) ? $context["user"] : (function () { throw new RuntimeError('Variable "user" does not exist.', 46, $this->source); })()), "last_name", [], "any", false, false, false, 46), "html", null, true);
+        echo "';
+</script>
 
 ";
         
@@ -172,7 +185,7 @@ class __TwigTemplate_ed45669d612098846c4d6813c2116d5f extends Template
      */
     public function getDebugInfo()
     {
-        return array (  139 => 37,  133 => 34,  124 => 28,  116 => 23,  109 => 19,  101 => 14,  96 => 12,  88 => 6,  78 => 5,  59 => 3,  36 => 1,);
+        return array (  154 => 46,  150 => 45,  139 => 37,  133 => 34,  124 => 28,  116 => 23,  109 => 19,  101 => 14,  96 => 12,  88 => 6,  78 => 5,  59 => 3,  36 => 1,);
     }
 
     public function getSourceContext()
@@ -190,7 +203,7 @@ class __TwigTemplate_ed45669d612098846c4d6813c2116d5f extends Template
         <div class=\"register-form w-50\">
             {{ form_errors(form) }}
 
-            {{ form_start(form) }}
+            {{ form_start(form, {'attr': {'class': 'col-10'}}) }}
             <div class=\"row\">
                 <div class=\"col-6\">
                     <div class=\"row\">
@@ -208,15 +221,22 @@ class __TwigTemplate_ed45669d612098846c4d6813c2116d5f extends Template
                     </div>
                 </div>
             </div>
-            <div class=\"roles\">
+            <div class=\"roles mb-3\">
                 <span class=\"material-icons\">assignment_ind</span>
                 {{ form_row(form.roles) }}
             </div>
-            <div><button type=\"submit\" class=\"btn btn-success\">Registreren</button></div>
+            <div><button type=\"submit\" class=\"btn btn-success\">Opslaan</button></div>
             {{ form_end(form) }}
         </div>
     </div>
 </main>
+
+<script type=\"text/javascript\">
+    var first_name = document.getElementById('update_user_form_first_name');
+    var last_name = document.getElementById('update_user_form_last_name');
+    first_name.value = '{{ user.first_name }}';
+    last_name.value = '{{ user.last_name }}';
+</script>
 
 {% endblock %}
 ", "admin/updateUser.html.twig", "C:\\Users\\noah-\\zand1\\WeatherApp\\templates\\admin\\updateUser.html.twig");

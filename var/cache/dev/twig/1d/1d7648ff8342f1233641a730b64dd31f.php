@@ -180,7 +180,7 @@ class __TwigTemplate_6d70c664a3144f1b551b128c2d0df5f6 extends Template
 
     public function getSourceContext()
     {
-        return new Source("{% extends 'base.html.twig' %}
+        return new Source("    {% extends 'base.html.twig' %}
 
 {% block title %}Nieuwe Klant{% endblock %}
 

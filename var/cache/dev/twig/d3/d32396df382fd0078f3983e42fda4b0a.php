@@ -130,8 +130,11 @@ class __TwigTemplate_5b0c84d5d2335305b86c8d7c8f04eafa extends Template
                             <a href=\"";
             // line 28
             echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("user_edit", ["id" => twig_get_attribute($this->env, $this->source, $context["record"], "id", [], "any", false, false, false, 28)]), "html", null, true);
-            echo "\" class=\"btn btn-primary\">Wijzigen</a>
-                            <a href=\"#\" class=\"btn btn-danger\">Verwijderen</a>
+            echo "\" class=\"btn btn-primary\">Bewerken</a>
+                            <a href=\"";
+            // line 29
+            echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("user_delete", ["id" => twig_get_attribute($this->env, $this->source, $context["record"], "id", [], "any", false, false, false, 29)]), "html", null, true);
+            echo "\" class=\"btn btn-danger\">Verwijderen</a>
                         </td>
                     </tr>
                 ";
@@ -174,7 +177,7 @@ class __TwigTemplate_5b0c84d5d2335305b86c8d7c8f04eafa extends Template
      */
     public function getDebugInfo()
     {
-        return array (  143 => 33,  132 => 28,  127 => 26,  123 => 25,  119 => 24,  115 => 23,  111 => 22,  108 => 21,  104 => 20,  88 => 6,  78 => 5,  59 => 3,  36 => 1,);
+        return array (  146 => 33,  136 => 29,  132 => 28,  127 => 26,  123 => 25,  119 => 24,  115 => 23,  111 => 22,  108 => 21,  104 => 20,  88 => 6,  78 => 5,  59 => 3,  36 => 1,);
     }
 
     public function getSourceContext()
@@ -206,8 +209,8 @@ class __TwigTemplate_5b0c84d5d2335305b86c8d7c8f04eafa extends Template
                         <td>{{ record.email }}</td>
                         <td>{{ record.roles|join(', ') }}</td>
                         <td>
-                            <a href=\"{{ path('user_edit', {'id': record.id}) }}\" class=\"btn btn-primary\">Wijzigen</a>
-                            <a href=\"#\" class=\"btn btn-danger\">Verwijderen</a>
+                            <a href=\"{{ path('user_edit', {'id': record.id}) }}\" class=\"btn btn-primary\">Bewerken</a>
+                            <a href=\"{{ path('user_delete', {'id': record.id}) }}\" class=\"btn btn-danger\">Verwijderen</a>
                         </td>
                     </tr>
                 {% endfor %}

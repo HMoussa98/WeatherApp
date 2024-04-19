@@ -15,8 +15,6 @@ class KlantRepository extends ServiceEntityRepository
         parent::__construct($registry, Klant::class);
     }
 
-    // Voeg hier eventueel aangepaste query methoden toe
-
     public function findBySearch(string $search)
     {
         return $this->createQueryBuilder('k')
@@ -30,7 +28,7 @@ class KlantRepository extends ServiceEntityRepository
     // Voeg de findAll methode toe om alle klanten op te halen
     public function findAll(): array
     {
-        return $this->createQueryBuilder('k')
+        return $this->createQueryBuilder('')
             ->getQuery()
             ->getResult();
     }

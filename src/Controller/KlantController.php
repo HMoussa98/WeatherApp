@@ -12,10 +12,11 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Klant;
 
+
 class KlantController extends AbstractController
 {
-    #[Route('/klant/manage', name: 'app_service_manage')]
-    public function manage(KlantRepository $klantRepository): Response
+    #[Route('/app_service_manage', name: 'app_service_manage')]
+    public function index (KlantRepository $klantRepository): Response
     {
         $klant = $klantRepository->findAll();
 
@@ -23,6 +24,7 @@ class KlantController extends AbstractController
             'klant' => $klant,
         ]);
     }
+
 
     // Andere acties...
 
@@ -45,25 +47,5 @@ class KlantController extends AbstractController
         return $this->render('klant/klant_nieuw.html.twig', [
             'form' => $form->createView(),
         ]);
-    }
-
-
-
-
-
-    #[Route('/klant/verwijderen/{id}', name: 'klant_verwijderen', methods: ['POST'])]
-    public function verwijderen(int $id, KlantRepository $klantRepository, EntityManagerInterface $entityManager): Response
-    {
-        $klant = $klantRepository->find($id);
-        if (!$klant) {
-            $this->addFlash('error', 'Klant niet gevonden.');
-            return $this->redirectToRoute('app_service_manage');
-        }
-
-        $entityManager->remove($klant);
-        $entityManager->flush();
-
-        $this->addFlash('success', 'Klant succesvol verwijderd.');
-        return $this->redirectToRoute('app_service_manage');
     }
 }

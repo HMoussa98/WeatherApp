@@ -17,7 +17,7 @@ public function buildForm(FormBuilderInterface $builder, array $options)
 {
 $builder
     ->add('id', TextType::class, [
-        'label' => 'Klant ID', // Optioneel: een label toevoegen voor het veld
+        'label' => 'Contract ID', // Optioneel: een label toevoegen voor het veld
         'attr' => ['class' => 'form-control'], // Optioneel: attributen toevoegen voor de HTML-weergave van het veld
     ])
     ->add('naam',)
