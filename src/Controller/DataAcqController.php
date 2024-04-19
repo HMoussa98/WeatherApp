@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DataAcqController extends AbstractController
-{
+{   
     #[Route('/data_acq', name: 'app_data_acq')]
     public function index(Request $request, ManagerRegistry $doctrine): Response
     {

@@ -14,7 +14,7 @@ class SecurityController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils, Request $request): Response
     {
         if ($this->getUser()) {
-            return $this->redirectToRoute('app_logout');
+            return $this->redirectToRoute('index');
         }
 
         // get the login error if there is one
@@ -29,5 +29,30 @@ class SecurityController extends AbstractController
     public function logout(): void
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+    }
+
+    #[Route(path: '/', name: 'index')]
+    public function redirectTo(): Response
+    {
+        #ROLE_ADMIN
+        if ($this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('app_admin');
+        
+        #ROLE_DATA_ACQUISITION
+        } elseif ($this->isGranted('ROLE_DATA_ACQUISITION')) {
+            return $this->redirectToRoute('app_data_acq');
+
+        #ROLE_DEVELOPMENT_MAINTENANCE
+        } elseif ($this->isGranted('ROLE_DEVELOPMENT_MAINTENANCE')) {
+            return $this->redirectToRoute('app_dev_maintan');
+
+        #ROLE_SERVICE_MANAGEMENT
+        } elseif ($this->isGranted('ROLE_SERVICE_MANAGEMENT')) {
+            return $this->redirectToRoute('app_service_manage');
+        
+        #No role
+        } else {
+            return $this->redirectToRoute('app_logout');
+        }
     }
 }

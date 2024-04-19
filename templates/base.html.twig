@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Welcome!{% endblock %}</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('styles.css') }}"> <!-- Voeg de CSS toe -->
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
@@ -16,9 +15,8 @@
 <body>
 <header>
     {% if app.user  %}
-        {{ is_granted("ROLE_DEVELOPMENT_MAINTENANCE") }}
-        {% if is_granted("ROLE_DEVELOPMENT_MAINTENANCE")%}
-        <h1>Dashboard: Application Development & Maintenance </h1>
+        {% if is_granted("ROLE_ADMIN")%}
+        <h1>Dashboard: Admin </h1>
         <div class="logo-container">
             <img src="{{ asset('AppDevMaint/LogoIWA.jpg') }}" alt="Logo"> <!-- Voeg het logo toe -->
         </div>
@@ -28,9 +26,10 @@
                 <i class="material-icons">account_circle</i> <!-- Profielsymbool -->
             </button>
             <div class="dropdown-content">
-                <a href="/weatherData">Weergegevens</a> <!-- Link naar /weatherData -->
-                <a href="/stationData">Weerstations</a>
-                <a href="#">Meldingen</a>
+                <a href="/register">Register</a> <!-- Link naar /weatherData -->
+                <a href="/weer-stations">Weerstations</a> <!-- Link naar /weatherData -->
+                <a href="{{ path('app_data_acq') }}">WeerData & Visualisatie</a>
+                <a href="/meldingen">Meldingen</a>
                 <a href="#">Contact</a>
                 <a href="{{ path('app_logout') }}">Logout</a> <!-- Voeg logout-link toe -->
             </div>
@@ -50,6 +49,7 @@
                 <div class="dropdown-content">
                     <a href="/weer-stations">Weerstations</a> <!-- Link naar /weatherData -->
                     <a href="{{ path('app_data_acq') }}">WeerData & Visualisatie</a>
+                    <a href="/meldingen">Meldingen</a>
 
                     <a href="{{ path('app_logout') }}">Logout</a> <!-- Voeg logout-link toe -->
                 </div>

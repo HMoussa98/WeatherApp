@@ -43,11 +43,11 @@
                     <input type="text" name="endTime" placeholder="HH:mm:ss" value="{{ filters.endTime }}"
                            pattern="\d{2}:\d{2}:\d{2}" title="Enter end time in HH:mm:ss format">
                     <label for="limit"> Rijn Limiet</label>
-                    <input type="number" name="limit" placeholder="Limit" data-value="10" value="{{ filters.limit }}">
+                    <input type="number" name="limit" placeholder="Limit" data-value="10"  min="0" value="{{ filters.limit }}">
                     <!-- Add other text inputs for filters here -->
-                    <button type="submit" class="button">Apply Filters</button>
-                    <button type="button" class="button" onclick="clearFilters()">Clear Filters</button>
-                    <button type="button" class="button" onclick="visualizeData()">Visualize</button>
+                    <button type="submit" class="button">Filters toepassen</button>
+                    <button type="button" class="button" onclick="clearFilters()">Filters wissen</button>
+                    <button type="button" class="button" onclick="visualizeData()">Visualiseer</button>
                 </form>
 
 
@@ -157,7 +157,7 @@
 
                 // Push data for both charts with random colors
                 datasets.push({
-                    label: 'Station {{ data.STN }}',
+                    label: 'Station {{ data.STN }}, WID {{ data.id }}',
                     data: data,
                     backgroundColor: getRandomColor(), // Random background color
                     borderColor: getRandomColor(), // Random border color

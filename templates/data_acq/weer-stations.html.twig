@@ -174,7 +174,7 @@
             height: 3rem;
             margin: 0 .5rem;
             padding: 0 1rem;
-            width: 5rem;
+            width: 100px;
         }
         .text--medium {
             font-family: "Open Sans", sans-serif;
@@ -214,8 +214,8 @@
                     <label for="end_latitude"> End Latitude</label>
                     <input type="number" name="end_latitude" placeholder="End Latitude" value="{{ filters.end_latitude }}">
 
-                    <button type="submit" class="button">Apply Filters</button>
-                    <button type="button" class="button" onclick="clearFilters()">Clear Filters</button>
+                    <button type="submit" class="button">Filters toepassen</button>
+                    <button type="button" class="button" onclick="clearFilters()">Filters wissen</button>
                 </form>
 
 
@@ -233,11 +233,11 @@
                                 Station Naam: {{ weatherStation.getName() }}
                             </p>
                             <div class="card__title">
-                                <p class="text--medium ">longitude: {{ weatherStation.getLongitude() }}</p>
+                                <p class="text--medium ">Longitude: {{ weatherStation.getLongitude() }}</p>
 
                             </div>
                             <div class="card__title">
-                                <p class="text--medium ">latitude: {{ weatherStation.getLatitude() }}</p>
+                                <p class="text--medium ">Latitude: {{ weatherStation.getLatitude() }}</p>
                             </div>
                            <div class="card__button_contetnet">
                                <div class="card__buttons">

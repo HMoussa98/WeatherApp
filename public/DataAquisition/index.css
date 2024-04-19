@@ -144,7 +144,7 @@ input[type="text"] {
     height: 3rem;
     margin: 0 .5rem;
     padding: 0 1rem;
-    width: 5rem;
+    width: 100px;
 }
 
 .paging span {

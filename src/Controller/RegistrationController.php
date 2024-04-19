@@ -35,6 +35,9 @@ class RegistrationController extends AbstractController
                 $roles[] = $role;
             }
 
+            $user->setFirst_name($form->get('first_name')->getData());
+            $user->setLast_name($form->get('last_name')->getData());
+
             $user->setRoles(array_unique($roles));
 
             $entityManager->persist($user);
