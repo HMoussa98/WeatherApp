@@ -3,6 +3,7 @@
 namespace App\Controller;
 use App\Entity\GeoLocation;
 use App\Entity\Station;
+use App\Entity\StationGeoLocation;
 use App\Repository\GeoLocationRepository;
 use App\Repository\NearstLocationRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -181,12 +182,21 @@ class DataAcqController extends AbstractController
         $endLongitude = $request->query->get('end_longitude');
         $beginLatitude = $request->query->get('begin_latitude');
         $endLatitude = $request->query->get('end_latitude');
-
+        $countryCode = $request->query->get('country_code');
         // Retrieve weather stations with geolocation information
         $repository = $doctrine->getRepository(Station::class);
         $queryBuilder = $repository->createQueryBuilder('s');
 
-        // Apply filters if provided
+
+
+        if ($countryCode) {
+            $queryBuilder
+                ->join(GeoLocation::class, 'geo')
+                ->andWhere('geo.stationName = s.name')
+                ->andWhere('geo.countryCode = :countryCode')
+                ->setParameter('countryCode', $countryCode);
+        }
+
         if ($station) {
             $queryBuilder->andWhere('s.name LIKE :station')
                 ->setParameter('station', '%'.$station.'%');
@@ -234,6 +244,7 @@ class DataAcqController extends AbstractController
                 'end_longitude' => $endLongitude,
                 'begin_latitude' => $beginLatitude,
                 'end_latitude' => $endLatitude,
+                'country_code' => $countryCode,
             ],
         ]);
     }
@@ -247,21 +258,6 @@ class DataAcqController extends AbstractController
         return $this->render('data_acq/geoLocation.html.twig', [
             'geoLocation' => $geoLocation,
             'nearestLocation' => $nearestLocation,
-        ]);
-    }
-
-
-
-    #[Route('nearestlocation/{station}', name: 'nearestlocation')]
-    public function nearestlocation($station,NearstLocationRepository $nearestLocationRepository): Response
-    {
-        // Assuming you have a service to calculate the nearest location
-        $nearestLocation = $nearestLocationRepository->findOneBy(['stationName' => $station]);
-
-        return $this->render('data_acq/nearestLocation.html.twig', [
-            'nearestLocation' => $nearestLocation,
-            'stationName'=>$station
-
         ]);
     }
 
