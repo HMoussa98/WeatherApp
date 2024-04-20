@@ -2,50 +2,56 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
+use App\Entity\Users;
 use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class RegistrationController extends AbstractController
-{   
+{
     #[Route('/register', name: 'app_register')]
-    public function register(): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
-        return $this->render('register/index.html.twig', [
-            'controller_name' => 'RegistrationController',
+        $user = new Users();
+        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // encode the plain password
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
+
+            $roles = [];
+
+            foreach ($form->get('roles')->getData() as $role) {
+                $roles[] = $role;
+            }
+
+            $user->setFirst_name($form->get('first_name')->getData());
+            $user->setLast_name($form->get('last_name')->getData());
+
+            $user->setRoles(array_unique($roles));
+
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            // return $this->redirect($request->getUri());
+
+            // do anything else you need here, like send an email
+
+            return $this->redirectToRoute('register');
+        }
+
+        return $this->render('registration/register.html.twig', [
+            'registrationForm' => $form,
         ]);
     }
-
-    // #[Route('/register', name: 'app_register')]
-    // public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
-    // {
-    //     $user = new User();
-    //     $form = $this->createForm(RegistrationFormType::class, $user);
-    //     $form->handleRequest($request);
-
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         // encode the plain password
-    //         $user->setPassword(
-    //         $userPasswordHasher->hashPassword(
-    //                 $user,
-    //                 $form->get('plainPassword')->getData()
-    //             )
-    //         );
-
-    //         $entityManager->persist($user);
-    //         $entityManager->flush();
-    //         // do anything else you need here, like send an email
-
-    //         return $this->redirectToRoute('movies');
-    //     }
-
-    //     return $this->render('registration/register.html.twig', [
-    //         'registrationForm' => $form->createView(),
-    //     ]);
-    // }
 }

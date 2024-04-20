@@ -6,16 +6,91 @@
 
 index:
     path: /
-    controller: App\Controller\MainController::index
+    controller: App\Controller\SecurityController::redirectTo
 
-Main:
-    path: /main
-    controller: App\Controller\MainController::index
+app_admin:
+    path: /admin
+    controller: App\Controller\AdminController::index
 
-Login:
+app_admin_dash:
+    path: /admin/dashboard
+    controller: App\Controller\AdminController::dashboard
+
+user_edit:
+    path: /admin/dashboard/edit_user/{id}
+    controller: App\Controller\AdminController::updateUser
+
+user_delete:
+    path: /admin/dashboard/delete_user/{id}
+    controller: App\Controller\AdminController::deleteUser
+
+app_login:
     path: /login
-    controller: App\Controller\LoginController::login
+    controller: App\Controller\SecurityController::login
 
-Register:
+app_logout:
+    path: /logout
+    controller: App\Security\SecurityController::logout
+
+register:
     path: /register
     controller: App\Controller\RegistrationController::register
+
+app_data_acq:
+    path: /data_acq
+    controller: App\Controller\DataAcqController::index
+
+app_dev_maintan:
+    path: /dev_maintan
+    controller: App\Controller\DevMaintanController::index
+
+app_service_manage:
+    path: /service_manage
+    controller: App\Controller\ServiceManageController::index
+# config/routes.yaml
+# config/routes.yaml
+
+post_weather_data:
+    path: /postWeatherData
+    controller: App\Controller\WeatherDataController::postWeatherData
+    methods: [POST]
+
+get_weather_data:
+    path: /weatherData
+    controller: App\Controller\DevMaintanController::weatherData
+    methods: [GET]
+
+weer_stations:
+    path: /weer-stations
+    controller: App\Controller\DataAcqController::weatherStations
+    methods: [GET]
+
+geolocation:
+    path: '/geolocation/{station}'
+    controller: 'App\Controller\DataAcqController::geolocation'
+
+nearestlocation:
+    path: '/nearestlocation/{station}'
+    controller: 'App\Controller\DataAcqController::nearestlocation'
+
+app_meldingen:  # New route for notifications
+    path: /meldingen
+    controller: App\Controller\MeldingenController::index
+
+
+klant_nieuw:
+    path: /klant_nieuw
+    controller: App\Controller\KlantController::nieuw
+
+klant_verwijderen:
+    path: /klant_verwijderen
+    controller: App\Controller\KlantController::verwijderen
+
+contract_index:
+    path: /contract_index
+    controller: App\Controller\ContractController::index
+    methods: GET
+
+abbo_bewerken:
+    path: /abbo_bewerken
+    controller: App\Controller\AbboController::bewerken

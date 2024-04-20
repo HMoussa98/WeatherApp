@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+    {% block stylesheets %}
+        {{ parent() }}
+        <link rel="stylesheet" href="{{ asset('DataAquisition/styles.css') }}">
+    {% endblock %}
+    <main>
+        <div class="container my-5 container-h">
+            <div class="left">
+                <h1>Login</h1>
+                <form method="post" class="form">
+                    {% if error %}
+                        <div class="alert alert-danger mb-3">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+                    <div class="mb-3">
+                        <span class="icon"><span class="material-icons">mail</span></span>
+                        <input type="email" name="email" id="inputEmail" class="email" autocomplete="email" placeholder="Email" required autofocus>
+                    </div>
+                    <div class="mb-3">
+                        <span class="icon"><span class="material-icons">lock</span></span>
+                        <input type="password" name="password" id="inputPassword" class="password" placeholder="Wachtwoord" autocomplete="current-password" required>
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                    </div>
+
+                    <div><button class="btn btn-primary px-5" type="submit">Login</button></div>
+                </form>
+            </div>
+            <div class="right">
+                <img src="https://i.postimg.cc/X7L8GXnL/LogoIWA.jpg" alt="logo">
+            </div>
+        </div>
+    </main>
+
+{% endblock %}

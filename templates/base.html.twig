@@ -1,17 +1,71 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        {% block stylesheets %}
-        {% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</head>
+<body>
+<header>
+    {% if app.user  %}
+        {% if is_granted("ROLE_ADMIN")%}
+        <h1>Dashboard: Admin </h1>
+        <div class="logo-container">
+            <img src="{{ asset('AppDevMaint/LogoIWA.jpg') }}" alt="Logo"> <!-- Voeg het logo toe -->
+        </div>
+        <div class="profile-dropdown">
+            <button class="profile-btn">
+                <span class="username">{{ app.user.userIdentifier }}</span> <!-- Gebruikersnaam bovenaan -->
+                <i class="material-icons">account_circle</i> <!-- Profielsymbool -->
+            </button>
+            <div class="dropdown-content">
+                <a href="/admin/dashboard">Dashboard</a>
+                <a href="/service_manage">Klanten</a> <!-- Link naar /weatherData -->
+                <a href="/klant_nieuw">Klant Register</a> <!-- Link naar /weatherData -->
+                <a href="/register">Register</a> <!-- Link naar /weatherData -->
+                <a href="/weer-stations">Weerstations</a> <!-- Link naar /weatherData -->
+                <a href="{{ path('app_data_acq') }}">WeerData & Visualisatie</a>
+                <a href="/meldingen">Meldingen</a>
+                <a href="#">Contact</a>
+                <a href="{{ path('app_logout') }}">Logout</a> <!-- Voeg logout-link toe -->
+            </div>
+        </div>
+        {% endif %}
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+        {% if "ROLE_DATA_ACQUISITION" in app.user.roles() %}
+            <h1>Dashboard: Data ACQUISITION  </h1>
+            <div class="logo-container">
+                <img src="{{ asset('AppDevMaint/LogoIWA.jpg') }}" alt="Logo"> <!-- Voeg het logo toe -->
+            </div>
+            <div class="profile-dropdown">
+                <button class="profile-btn">
+                    <span class="username">{{ app.user.userIdentifier }}</span> <!-- Gebruikersnaam bovenaan -->
+                    <i class="material-icons">account_circle</i> <!-- Profielsymbool -->
+                </button>
+                <div class="dropdown-content">
+                    <a href="/weer-stations">Weerstations</a> <!-- Link naar /weatherData -->
+                    <a href="{{ path('app_data_acq') }}">WeerData & Visualisatie</a>
+                    <a href="/meldingen">Meldingen</a>
+
+                    <a href="{{ path('app_logout') }}">Logout</a> <!-- Voeg logout-link toe -->
+                </div>
+            </div>
+        {% endif %}
+    {% else %}
+        <a href="{{ path('app_login') }}" class="login-btn">Login</a>
+    {% endif %}
+    <a href="#" class="support-btn">Support</a>
+</header>
+{% block body %}{% endblock %}
+<footer>
+    <p>&copy; Copyrights 2024</p>
+</footer>
+</body>
 </html>

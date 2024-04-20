@@ -1,0 +1,122 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% block stylesheets %}
+        {{ parent() }}
+        <link rel="stylesheet" href="{{ asset('DataAquisition/styles.css') }}">
+        <link rel="stylesheet" href="{{ asset('DataAquisition/weerStation.css') }}">
+        <style>
+
+        </style>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+    {% endblock %}
+
+    <main>
+
+        <div class="content">
+
+            <section class="table-header grid">
+
+                <!-- Add filter form here -->
+
+                <form method="get" action="{{ path('weer_stations') }}">
+                    <h2>Filters:</h2>
+
+                    <label for="station"> Station Name</label>
+                    <input type="text" name="station" placeholder="Station" value="{{ filters.station }}">
+
+                    <label for="country_code">Country Code</label>
+                    <input type="text" name="country_code" placeholder="Country Code" value="{{ filters.country_code }}">
+
+
+                    <label for="limit"> Limit</label>
+                    <input type="number" name="limit" placeholder="Limit" value="{{ filters.limit }}" min="0">
+
+                    <label for="begin_longitude"> Begin Longitude</label>
+                    <input type="number" name="begin_longitude" placeholder="Begin Longitude"
+                           value="{{ filters.begin_longitude }}">
+
+                    <label for="end_longitude"> End Longitude</label>
+                    <input type="number" name="end_longitude" placeholder="End Longitude"
+                           value="{{ filters.end_longitude }}">
+
+                    <label for="begin_latitude"> Begin Latitude</label>
+                    <input type="number" name="begin_latitude" placeholder="Begin Latitude"
+                           value="{{ filters.begin_latitude }}">
+
+                    <label for="end_latitude"> End Latitude</label>
+                    <input type="number" name="end_latitude" placeholder="End Latitude"
+                           value="{{ filters.end_latitude }}">
+
+                    <button type="submit" class="button">Filters toepassen</button>
+                    <button type="button" class="button" onclick="clearFilters()">Filters wissen</button>
+                </form>
+
+            </section>
+
+        </div>
+
+
+
+        <div id="map"></div>
+        <div  class="card">
+
+
+            <table>
+                <thead>
+                <tr>
+                    <th>Station Naam</th>
+                    <th>Longitude</th>
+                    <th>Latitude</th>
+                    <th>Geolocatie</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for weatherStation in weatherStations %}
+                    <tr>
+                        <td>{{ weatherStation.getName() }}</td>
+                        <td>{{ weatherStation.getLongitude() }}</td>
+                        <td>{{ weatherStation.getLatitude() }}</td>
+                        <td>
+                            <a style="color: white"
+                               href="{{ path('geolocation', {'station': weatherStation.getName()}) }}"
+                               class="geoButton">Geolocatie</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+
+
+
+    </main>
+
+    {% block javascripts %}
+        {{ parent() }}
+        <script src="{{ asset('DataAquisition/script.js') }}"></script>
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+        <script>
+            // Initialize the map
+            var map = L.map('map').setView([51.505, -0.09], 13);
+
+            // Add the base tile layer
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+            }).addTo(map);
+
+            // Fit the map to the bounds of the markers
+            var bounds = L.latLngBounds();
+            {% for weatherStation in weatherStations %}
+            var marker = L.marker([{{ weatherStation.getLatitude() }}, {{ weatherStation.getLongitude() }}])
+                .bindPopup("Station Name: {{ weatherStation.getName() }}")
+                .addTo(map);
+            bounds.extend(marker.getLatLng());
+            {% endfor %}
+            map.fitBounds(bounds);
+        </script>
+    {% endblock %}
+
+{% endblock %}

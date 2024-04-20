@@ -2,12 +2,11 @@
 
 namespace App\Form;
 
-
-use App\Entity\User;
+use App\Entity\Users;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -19,32 +18,26 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email', TextType::class, [
+            ->add('first_name', null, [
                 'label' => false,
-                'attr' => [
-                    'autocomplete' => 'email',
-                    'class' => 'bg-transparent block mt-10 mx-auto border-b-2 w-1/5 h-20 text-2xl outline-none',
-                    'placeholder' => 'Email'
-                ],
-            ])
-            ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
-                    ]),
-                ],
+                'attr' => ['placeholder' => 'First name', 'class' => 'form-control']
+            ])
+            ->add('last_name', null, [
+                'label' => false,
+                'mapped' => false,
+                'attr' => ['placeholder' => 'Last name', 'class' => 'form-control']
+            ])
+            ->add('email', null, [
+                'label' => false,
+                'attr' => ['placeholder' => 'Email', 'class' => 'form-control']
             ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'label' => false,
                 'mapped' => false,
-                'attr' => [
-                    'autocomplete' => 'new-password',
-                    'class' => 'bg-transparent block mt-10 mx-auto border-b-2 w-1/5 h-20 text-2xl outline-none',
-                    'placeholder' => 'Password'
-                ],
+                'attr' => ['autocomplete' => 'new-password', 'class' => 'form-control', 'placeholder' => 'Wachtwoord'],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a password',
@@ -57,13 +50,27 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
+            ->add('roles', ChoiceType::class, [ 
+                'mapped' => false,
+                'label' => 'Rollen',
+                'expanded' => true,
+                'multiple' => true,
+                'choices' => [
+                    'Admin' => 'ROLE_ADMIN',
+                    'Data Acquisition' => 'ROLE_DATA_ACQUISITION',
+                    'ICT Services' => 'ROLE_ICT_SERVICES',
+                    'Development & Maintanance' => 'ROLE_DEVELOPMENT_MAINTENANCE',
+                    'Service Management' => 'ROLE_SERVICE_MANAGEMENT',
+                    'Stafbureau' => 'ROLE_STAFBUREAU',
+                ]
+            ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => Users::class,
         ]);
     }
 }

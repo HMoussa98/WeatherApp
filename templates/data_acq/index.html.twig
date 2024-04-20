@@ -1,0 +1,238 @@
+{# templates/data_acq/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Weather Data{% endblock %}
+
+{% block body %}
+
+    <style>
+
+    </style>
+
+    {% block stylesheets %}
+        {{ parent() }}
+        <link rel="stylesheet" href="{{ asset('DataAquisition/styles.css') }}">
+        <link rel="stylesheet" href="{{ asset('DataAquisition/index.css') }}">
+    {% endblock %}
+    <main>
+        <div class="content">
+            <section class="main-header grid">
+
+                <h1 class="h1tag">WeerData & Visualisatie  </h1>
+                <!-- Add any additional buttons if needed -->
+            </section>
+
+            <section class="table-header grid">
+
+                <!-- Add filter form here -->
+
+                <form method="get" action="{{ path('app_data_acq') }}">
+                    <h2 class="h2tag">Filters:</h2>
+
+                    <label for="stn"> Station Naam</label>
+                    <input type="text" name="stn" placeholder="Station" value="{{ filters.stn }}">
+                    <label for="startDate"> Begin Datum</label>
+                    <input type="date" name="startDate" value="{{ filters.startDate }}">
+                    <label for="endDate"> Eind Datum</label>
+                    <input type="date" name="endDate" value="{{ filters.endDate }}">
+                    <label for="startTime"> Begin Tijd</label>
+                    <input type="text" name="startTime" placeholder="HH:mm:ss" value="{{ filters.startTime }}"
+                           pattern="\d{2}:\d{2}:\d{2}" title="Enter start time in HH:mm:ss format">
+                    <label for="endTime"> Eind Tijd</label>
+                    <input type="text" name="endTime" placeholder="HH:mm:ss" value="{{ filters.endTime }}"
+                           pattern="\d{2}:\d{2}:\d{2}" title="Enter end time in HH:mm:ss format">
+                    <label for="limit"> Rijn Limiet</label>
+                    <input type="number" name="limit" placeholder="Limit" data-value="10"  min="0" value="{{ filters.limit }}">
+                    <!-- Add other text inputs for filters here -->
+                    <button type="submit" class="button">Filters toepassen</button>
+                    <button type="button" class="button" onclick="clearFilters()">Filters wissen</button>
+                    <button type="button" class="button" onclick="visualizeData()">Visualiseer</button>
+                </form>
+
+
+            </section>
+
+            <div class="card">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Station</th>
+                        <th>Datum</th>
+                        <th>Tijd</th>
+                        <th>Temperatuur</th>
+                        <th>DEWP</th>
+                        <th>STP</th>
+                        <th>SLP</th>
+                        <th>VISIB</th>
+                        <th>WDSP</th>
+                        <th>PRCP</th>
+                        <th>SNDP</th>
+                        <th>FRSHTT</th>
+                        <th>CLDC</th>
+                        <th>WNDDIR</th>
+                        <!-- Add other fields as needed -->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for data in weatherData %}
+                        <tr>
+                            <td>{{ data.id }}</td>
+                            <td>{{ data.STN }}</td>
+                            <td>{{ data.DATE|date('Y-m-d') }}</td>
+                            <td>{{ data.TIME|date('H:i:s') }}</td>
+                            <td>{{ data.TEMP }}</td>
+                            <td>{{ data.DEWP }}</td>
+                            <td>{{ data.STP }}</td>
+                            <td>{{ data.SLP }}</td>
+                            <td>{{ data.VISIB }}</td>
+                            <td>{{ data.WDSP }}</td>
+                            <td>{{ data.PRCP }}</td>
+                            <td>{{ data.SNDP }}</td>
+                            <td>{{ data.FRSHTT }}</td>
+                            <td>{{ data.CLDC }}</td>
+                            <td>{{ data.WNDDIR }}</td>
+
+                            <!-- Add other fields as needed -->
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Add pagination if needed -->
+        </div>
+
+
+        <div class="card">
+            <h2 class="h2tag">Station, Temperatuur, DEWP, VISIB, WDSP, PRCP, SNDP, CLDC en WNDDIR Chart</h2>
+            <canvas id="weatherChart" width="400" height="150"></canvas>
+        </div>
+
+
+        <div class="card">
+            <h2 class="h2tag">Station FRSHTT STP, SLP Chart</h2>
+            <canvas id="weatherChartWithSTPSLPFRSHTT" width="400" height="150"></canvas>
+        </div>
+
+    </main>
+
+
+    {% block javascripts %}
+        {{ parent() }}
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="{{ asset('DataAquisition/script.js') }}"></script>
+        <script>
+            // Initialize empty arrays for labels and datasets
+
+
+            function visualizeData() {
+                // Initialize empty arrays for labels and datasets for both charts
+                var labels = ['TEMP', 'DEWP', 'VISIB', 'WDSP', 'PRCP', 'SNDP', 'CLDC', 'WNDDIR'];
+                var datasets = [];
+                var datasetsWithSTPSLPFRSHTT = [];
+
+                // Function to generate random RGB color
+                function getRandomColor() {
+                    var r = Math.floor(Math.random() * 128) + 128; // Ensures a range of 128 to 255
+                    var g = Math.floor(Math.random() * 128) + 128; // Ensures a range of 128 to 255
+                    var b = Math.floor(Math.random() * 128) + 128; // Ensures a range of 128 to 255
+                    return 'rgba(' + r + ', ' + g + ', ' + b + ', 1)'; // Fully opaque color
+                }
+
+
+                // Use the Twig for loop to populate the datasets
+                {% for data in weatherData %}
+                var data = [
+                    {{ data.TEMP }},
+                    {{ data.DEWP }},
+                    {{ data.VISIB }},
+                    {{ data.WDSP }},
+                    {{ data.PRCP }},
+                    {{ data.SNDP }},
+                    {{ data.CLDC }},
+                    {{ data.WNDDIR }}
+                ];
+
+                // Push data for both charts with random colors
+                datasets.push({
+                    label: 'Station {{ data.STN }}, WID {{ data.id }}',
+                    data: data,
+                    backgroundColor: getRandomColor(), // Random background color
+                    borderColor: getRandomColor(), // Random border color
+                    borderWidth: 1
+                });
+
+                // Push data for the chart with STP, SLP, and FRSHTT with random colors
+                datasetsWithSTPSLPFRSHTT.push({
+                    label: 'Station {{ data.STN }}, FTT {{ data.FRSHTT }}',
+                    data: [
+                        {{ data.STP }},
+                        {{ data.SLP }}
+                    ],
+                    backgroundColor: getRandomColor(), // Random background color
+                    borderColor: getRandomColor(), // Random border color
+                    borderWidth: 1
+                });
+                {% endfor %}
+
+                // Create the chart without STP, SLP, and FRSHTT
+                var ctx = document.getElementById('weatherChart').getContext('2d');
+                var weatherChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: datasets
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: false,
+
+                                title: {
+                                    display: true,
+                                    text: 'Values'
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // Create the chart with only STP, SLP, and FRSHTT
+                var ctxWithSTPSLPFRSHTT = document.getElementById('weatherChartWithSTPSLPFRSHTT').getContext('2d');
+                var weatherChartWithSTPSLPFRSHTT = new Chart(ctxWithSTPSLPFRSHTT, {
+                    type: 'bar',
+                    data: {
+                        labels: ['STP', 'SLP'],
+                        datasets: datasetsWithSTPSLPFRSHTT
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                ticks: {
+                                    stepSize: 100, // Set the step size to 1000
+                                },
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Values'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+        </script>
+    {% endblock %}
+
+
+
+
+
+    <!-- Add this where you want the chart to appear -->
+
+
+
+{% endblock %}
