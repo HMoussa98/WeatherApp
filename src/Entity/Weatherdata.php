@@ -14,11 +14,6 @@ class Weatherdata
     #[ORM\Column(type: "integer")]
     private ?int $id;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
     #[ORM\Column(type: "integer", nullable: true)]
     private ?int $STN;
 
@@ -61,6 +56,10 @@ class Weatherdata
     #[ORM\Column(type: "integer", nullable: true)]
     private ?int $WNDDIR;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
     public function getSTN(): ?int
     {

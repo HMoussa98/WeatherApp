@@ -77,6 +77,22 @@ app_meldingen:  # New route for notifications
     path: /meldingen
     controller: App\Controller\MeldingenController::index
 
+app_melding_oplossen:
+    path: /meldingen/melding-oplossen/{id}
+    controller: App\Controller\MeldingenController::meldingOplossen
+    methods: ['GET', 'POST']
+
+update_melding_status:
+    path: /meldingen/update-status/{id}/{status}
+    controller: App\Controller\MeldingenController::updateMeldingStatus
+    methods: ['GET', 'POST']
+
+melding_verwijderen:
+    path: /meldingen/delete/{id}
+    controller: App\Controller\MeldingenController::deleteMelding
+    methods: ['GET', 'POST']
+
+
 
 klant_nieuw:
     path: /klant_nieuw

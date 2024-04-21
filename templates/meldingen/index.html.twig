@@ -1,18 +1,66 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Notifications{% endblock %}
+{% block title %}Meldingen{% endblock %}
 
 {% block body %}
 
     {% block stylesheets %}
         {{ parent() }}
+        <style>
+            .meldingButton {
+                background: #3a66ca;
+                border: 0;
+                border-radius: .25rem;
+                color: var(--color-white);
+                cursor: pointer;
+                font: inherit;
+                font-weight: 500;
+                align-items: center;
+                padding: 10px;
+            }
+
+            .busyStatusButton {
+                margin-right: 10px; /* Adjust the margin as needed */
+
+            }
+            .doneStatusButton {
+                margin-left: 10px; /* Adjust the margin as needed */
+
+            }
+
+
+
+            .deleteMeldingButton{
+                background: #820101;
+                border: 0;
+                border-radius: .25rem;
+                color: var(--color-white);
+                cursor: pointer;
+                font: inherit;
+                font-weight: 500;
+                align-items: center;
+                padding: 10px;
+            }
+
+            .busyMeldingButton{
+                background: #ffdf00;
+                border: 0;
+                border-radius: .25rem;
+                color: var(--color-white);
+                cursor: pointer;
+                font: inherit;
+                font-weight: 500;
+                align-items: center;
+                padding: 10px;
+            }
+        </style>
         <link rel="stylesheet" href="{{ asset('DataAquisition/styles.css') }}">
         <link rel="stylesheet" href="{{ asset('DataAquisition/index.css') }}">
     {% endblock %}
     <main>
         <div class="content">
             <section class="main-header grid">
-                <h1 class="h1tag">Meldingen</h1>
+                <h1 class="h1tag">Meldingen {{ notificationCount }}</h1>
             </section>
 
             <div class="card">
@@ -20,11 +68,14 @@
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Station ID</th>
+                        <th>Station Naam</th>
+                        <th>Weerdata ID</th>
                         <th>Datum</th>
                         <th>Tijd</th>
                         <th>Melding</th>
                         <th>Beschrijving</th>
+                        <th>Update Status</th>
+                        <th>Oplossen</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -32,15 +83,41 @@
                         <tr>
                             <td>{{ notification.id }}</td>
                             <td>
-                                {% for stnId in notification.STNID %}
-                                    {{ stnId }}
-                                    {% if not loop.last %}, {% endif %}
-                                {% endfor %}
+                                {{ notification.sTNID }}
+                            </td>
+                            <td>
+                                {{ notification.wEERID }}
                             </td>
                             <td>{{ notification.date|date('Y-m-d') }}</td>
                             <td>{{ notification.time|date('H:i:s') }}</td>
                             <td>{{ notification.errorName }}</td>
                             <td>{{ notification.description }}</td>
+
+                            <td>  <a href="{{ path('update_melding_status', {'id': notification.id, 'status': 'Bezig'}) }}"
+                                     class="busyStatusButton">&#x23F3;</a> ||
+
+                                <a href="{{ path('update_melding_status', {'id': notification.id, 'status': 'Opgelost'}) }}"
+                                   class="doneStatusButton">&#x2705;</a>
+
+                            </td>
+
+                            <td>
+                                {% if notification.status == 'Niet opgelost' %}
+                                    <a href="{{ path('app_melding_oplossen', {'id': notification.wEERID}) }}"
+                                       class="meldingButton">Melding oplossen</a>
+                                {% elseif notification.status == 'Bezig' %}
+                                    <a href="{{ path('app_melding_oplossen', {'id': notification.wEERID}) }}"
+                                       class="busyMeldingButton">Bezig &#x23F3;</a> <!-- ⏳ -->
+                                {% elseif notification.status == 'Opgelost' %}
+                                    <a href="{{ path('melding_verwijderen',
+                                        {'id': notification.id}) }}"
+                                       class="deleteMeldingButton"
+                                       onclick="return confirm('Weet u zeker dat u deze melding wilt verwijderen?')">Verwijderen</a>
+                                {% endif %}
+                            </td>
+
+
+
                         </tr>
                     {% endfor %}
                     </tbody>

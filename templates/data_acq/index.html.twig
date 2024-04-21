@@ -16,7 +16,7 @@
         <link rel="stylesheet" href="{{ asset('DataAquisition/index.css') }}">
     {% endblock %}
     <main>
-        <div class="content">
+
             <section class="main-header grid">
 
                 <h1 class="h1tag">WeerData & Visualisatie  </h1>
@@ -62,16 +62,16 @@
                         <th>Datum</th>
                         <th>Tijd</th>
                         <th>Temperatuur</th>
-                        <th>DEWP</th>
-                        <th>STP</th>
-                        <th>SLP</th>
-                        <th>VISIB</th>
-                        <th>WDSP</th>
-                        <th>PRCP</th>
-                        <th>SNDP</th>
+                        <th>Dauwpunt temperatuur</th>
+                        <th> Station Luchtdruk </th>
+                        <th> Zeeniveau Luchtdruk </th>
+                        <th>Zicht</th>
+                        <th>Windsnelheid</th>
+                        <th>Neerslag</th>
+                        <th>Sneeuwdiepte</th>
                         <th>FRSHTT</th>
-                        <th>CLDC</th>
-                        <th>WNDDIR</th>
+                        <th>Bewolking(%)</th>
+                        <th>Windrichting</th>
                         <!-- Add other fields as needed -->
                     </tr>
                     </thead>
@@ -82,16 +82,37 @@
                             <td>{{ data.STN }}</td>
                             <td>{{ data.DATE|date('Y-m-d') }}</td>
                             <td>{{ data.TIME|date('H:i:s') }}</td>
-                            <td>{{ data.TEMP }}</td>
-                            <td>{{ data.DEWP }}</td>
+                            <td>{{ data.TEMP }}°C</td>
+                            <td>{{ data.DEWP }}°</td>
                             <td>{{ data.STP }}</td>
                             <td>{{ data.SLP }}</td>
                             <td>{{ data.VISIB }}</td>
                             <td>{{ data.WDSP }}</td>
                             <td>{{ data.PRCP }}</td>
                             <td>{{ data.SNDP }}</td>
-                            <td>{{ data.FRSHTT }}</td>
-                            <td>{{ data.CLDC }}</td>
+                            <td>
+                                {% set frshtt = data.FRSHTT %}
+                                {% set conditions = [] %}
+                                {% set frshttArray = frshtt|split('') %}
+                                {% if frshttArray[0] == '1' %}
+                                    {% set conditions = conditions|merge(['🌫️']) %}
+                                {% endif %}
+                                {% if frshttArray[1] == '1' %}
+                                    {% set conditions = conditions|merge(['🌧️']) %}
+                                {% endif %}
+                                {% if frshttArray[2] == '1' %}
+                                    {% set conditions = conditions|merge(['🌨️']) %}
+                                {% endif %}
+
+                                {% if frshttArray[4] == '1' %}
+                                    {% set conditions = conditions|merge(['🌩️']) %}
+                                {% endif %}
+                                {% if frshttArray[5] == '1' %}
+                                    {% set conditions = conditions|merge(['🌪️']) %}
+                                {% endif %}
+                                {{ conditions|join(', ') }}
+                            </td>
+                            <td>{{ data.CLDC }}%</td>
                             <td>{{ data.WNDDIR }}</td>
 
                             <!-- Add other fields as needed -->
@@ -102,7 +123,7 @@
             </div>
 
             <!-- Add pagination if needed -->
-        </div>
+
 
 
         <div class="card">
