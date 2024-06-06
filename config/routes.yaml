@@ -5,108 +5,111 @@
 #     type: attribute
 
 index:
-    path: /
-    controller: App\Controller\SecurityController::redirectTo
+  path: /
+  controller: App\Controller\SecurityController::redirectTo
 
 app_admin:
-    path: /admin
-    controller: App\Controller\AdminController::index
+  path: /admin
+  controller: App\Controller\AdminController::index
 
 app_admin_dash:
-    path: /admin/dashboard
-    controller: App\Controller\AdminController::dashboard
+  path: /admin/dashboard
+  controller: App\Controller\AdminController::dashboard
 
 user_edit:
-    path: /admin/dashboard/edit_user/{id}
-    controller: App\Controller\AdminController::updateUser
+  path: /admin/dashboard/edit_user/{id}
+  controller: App\Controller\AdminController::updateUser
 
 user_delete:
-    path: /admin/dashboard/delete_user/{id}
-    controller: App\Controller\AdminController::deleteUser
+  path: /admin/dashboard/delete_user/{id}
+  controller: App\Controller\AdminController::deleteUser
 
 app_login:
-    path: /login
-    controller: App\Controller\SecurityController::login
+  path: /login
+  controller: App\Controller\SecurityController::login
 
 app_logout:
-    path: /logout
-    controller: App\Security\SecurityController::logout
+  path: /logout
+  controller: App\Security\SecurityController::logout
 
 register:
-    path: /register
-    controller: App\Controller\RegistrationController::register
+  path: /register
+  controller: App\Controller\RegistrationController::register
 
 app_data_acq:
-    path: /data_acq
-    controller: App\Controller\DataAcqController::index
+  path: /data_acq
+  controller: App\Controller\DataAcqController::index
 
 app_dev_maintan:
-    path: /dev_maintan
-    controller: App\Controller\DevMaintanController::index
+  path: /dev_maintan
+  controller: App\Controller\DevMaintanController::index
 
 app_service_manage:
-    path: /service_manage
-    controller: App\Controller\ServiceManageController::index
+  path: /service_manage
+  controller: App\Controller\ServiceManageController::index
 # config/routes.yaml
 # config/routes.yaml
 
 post_weather_data:
-    path: /postWeatherData
-    controller: App\Controller\WeatherDataController::postWeatherData
-    methods: [POST]
+  path: /postWeatherData
+  controller: App\Controller\WeatherDataController::postWeatherData
+  methods: [POST]
 
 get_weather_data:
-    path: /weatherData
-    controller: App\Controller\DevMaintanController::weatherData
-    methods: [GET]
+  path: /weatherData
+  controller: App\Controller\DevMaintanController::weatherData
+  methods: [GET]
+
+get_weather_data_api:
+  path: /api/weatherendpoint
+  controller: App\Controller\WeatherDataEndpointController::getWeatherData
+  methods: [GET]
 
 weer_stations:
-    path: /weer-stations
-    controller: App\Controller\DataAcqController::weatherStations
-    methods: [GET]
+  path: /weer-stations
+  controller: App\Controller\DataAcqController::weatherStations
+  methods: [GET]
 
 geolocation:
-    path: '/geolocation/{station}'
-    controller: 'App\Controller\DataAcqController::geolocation'
+  path: "/geolocation/{station}"
+  controller: 'App\Controller\DataAcqController::geolocation'
 
 nearestlocation:
-    path: '/nearestlocation/{station}'
-    controller: 'App\Controller\DataAcqController::nearestlocation'
+  path: "/nearestlocation/{station}"
+  controller: 'App\Controller\DataAcqController::nearestlocation'
 
-app_meldingen:  # New route for notifications
-    path: /meldingen
-    controller: App\Controller\MeldingenController::index
+app_meldingen: # New route for notifications
+  path: /meldingen
+  controller: App\Controller\MeldingenController::index
 
 app_melding_oplossen:
-    path: /meldingen/melding-oplossen/{id}
-    controller: App\Controller\MeldingenController::meldingOplossen
-    methods: ['GET', 'POST']
+  path: /meldingen/melding-oplossen/{id}
+  controller: App\Controller\MeldingenController::meldingOplossen
+  methods: ["GET", "POST"]
 
 update_melding_status:
-    path: /meldingen/update-status/{id}/{status}
-    controller: App\Controller\MeldingenController::updateMeldingStatus
-    methods: ['GET', 'POST']
+  path: /meldingen/update-status/{id}/{status}
+  controller: App\Controller\MeldingenController::updateMeldingStatus
+  methods: ["GET", "POST"]
 
 melding_verwijderen:
-    path: /meldingen/delete/{id}
-    controller: App\Controller\MeldingenController::deleteMelding
-    methods: ['GET', 'POST']
-
-
+  path: /meldingen/delete/{id}
+  controller: App\Controller\MeldingenController::deleteMelding
+  methods: ["GET", "POST"]
 
 klant_nieuw:
-    path: /klant_nieuw
-    controller: App\Controller\KlantController::nieuw
+  path: /klant_nieuw
+  controller: App\Controller\KlantController::nieuw
 
 klant_verwijderen:
-    path: /klant_verwijderen
-    controller: App\Controller\KlantController::verwijderen
+  path: /klant_verwijderen
+  controller: App\Controller\KlantController::verwijderen
 
 contract_index:
-    path: /contract_index
-    controller: App\Controller\ContractController::index
-    methods: GET
+  path: /contract_index
+  controller: App\Controller\ContractController::index
+  methods: GET
 
 abbo_bewerken:
-    path: /abbo_bewerken
-    controller: App\Controller\AbboController::bewerken
+  path: /abbo_bewerken
+  controller: App\Controller\AbboController::bewerken
