@@ -40,7 +40,7 @@ class WeatherDataEndpointController extends AbstractController
         if ($limit) {
             $queryBuilder->setMaxResults($limit);
         } else {
-            $queryBuilder->setMaxResults(10);
+            $queryBuilder->setMaxResults(800);
         }
 
         if ($dateStart && $dateEnd) {

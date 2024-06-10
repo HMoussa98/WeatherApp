@@ -70,6 +70,11 @@ weer_stations:
   controller: App\Controller\DataAcqController::weatherStations
   methods: [GET]
 
+weer_stations_api:
+  path: /api/weer-stations
+  controller: App\Controller\WeatherStationsEndpoint::weatherStations
+  methods: [GET]
+
 geolocation:
   path: "/geolocation/{station}"
   controller: 'App\Controller\DataAcqController::geolocation'
