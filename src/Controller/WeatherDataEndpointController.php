@@ -21,13 +21,6 @@ class WeatherDataEndpointController extends AbstractController
         $dewp = $request->query->get('dewp');
         $stp = $request->query->get('stp');
         $slp = $request->query->get('slp');
-        $visib = $request->query->get('visib');
-        $wdsp = $request->query->get('wdsp');
-        $prcp = $request->query->get('prcp');
-        $sndp = $request->query->get('sndp');
-        $frshtt = $request->query->get('frshtt');
-        $cldc = $request->query->get('cldc');
-        $wnddir = $request->query->get('wnddir');
         $limit = $request->query->get('limit');
         $timeStart = $request->query->get('startTime');
         $timeEnd = $request->query->get('endTime');
@@ -35,7 +28,8 @@ class WeatherDataEndpointController extends AbstractController
         $dateEnd = $request->query->get('endDate');
 
         $repository = $doctrine->getRepository(Weatherdata::class);
-        $queryBuilder = $repository->createQueryBuilder('w');
+        $queryBuilder = $repository->createQueryBuilder('w')
+            ->select('w.STN, w.TEMP, w.TIME, w.DEWP, w.STP, w.SLP');
 
         if ($limit) {
             $queryBuilder->setMaxResults($limit);
@@ -91,60 +85,20 @@ class WeatherDataEndpointController extends AbstractController
             $queryBuilder->andWhere('w.SLP = :slp')
                 ->setParameter('slp', $slp);
         }
-        if ($visib) {
-            $queryBuilder->andWhere('w.VISIB = :visib')
-                ->setParameter('visib', $visib);
-        }
-        if ($wdsp) {
-            $queryBuilder->andWhere('w.WDSP = :wdsp')
-                ->setParameter('wdsp', $wdsp);
-        }
-        if ($prcp) {
-            $queryBuilder->andWhere('w.PRCP = :prcp')
-                ->setParameter('prcp', $prcp);
-        }
-        if ($sndp) {
-            $queryBuilder->andWhere('w.SNDP = :sndp')
-                ->setParameter('sndp', $sndp);
-        }
-        if ($frshtt) {
-            $queryBuilder->andWhere('w.FRSHTT = :frshtt')
-                ->setParameter('frshtt', $frshtt);
-        }
-        if ($cldc) {
-            $queryBuilder->andWhere('w.CLDC = :cldc')
-                ->setParameter('cldc', $cldc);
-        }
-        if ($wnddir) {
-            $queryBuilder->andWhere('w.WNDDIR = :wnddir')
-                ->setParameter('wnddir', $wnddir);
-        }
 
         $weatherData = $queryBuilder->getQuery()->getResult();
 
         return $this->json([
-            'weatherData' => $weatherData,
-            'filters' => [
-                'stn' => $stn,
-                'date' => $date,
-                'time' => $time,
-                'temp' => $temp,
-                'dewp' => $dewp,
-                'stp' => $stp,
-                'slp' => $slp,
-                'visib' => $visib,
-                'wdsp' => $wdsp,
-                'prcp' => $prcp,
-                'sndp' => $sndp,
-                'frshtt' => $frshtt,
-                'cldc' => $cldc,
-                'wnddir' => $wnddir,
-                'limit' => $limit,
-                'startTime' => $timeStart,
-                'endTime' => $timeEnd,
-                'startDate' => $dateStart,
-                'endDate' => $dateEnd,
-            ],
+            'weatherData' => array_map(function ($data) {
+                return [
+                    'STN' => $data['STN'],
+                    'TEMP' => $data['TEMP'],
+                    'TIME' => $data['TIME'],
+                    'DEWP' => $data['DEWP'],
+                    'STP' => $data['STP'],
+                    'SLP' => $data['SLP'],
+                ];
+            }, $weatherData),
         ]);
     }
 }
